@@ -1,6 +1,6 @@
 package christmas.domain.menu;
 
-public enum Main {
+public enum Main implements Menu {
     T_BONE_STREAK("티본스테이크", 55000),
     BBQ_RIBS("바비큐립", 54000),
     SEAFOOD_PASTA("해산물파스타", 35000),
