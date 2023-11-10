@@ -5,25 +5,12 @@ import christmas.domain.menu.Menu;
 import java.util.Objects;
 
 public class OrderMenu {
-    private static final int MINIMUM_ORDER_COUNT = 1;
-
     private final Menu menu;
-    private final int count;
+    private final Count count;
 
     public OrderMenu(Menu menu, int count) {
-        validateCount(count);
         this.menu = menu;
-        this.count = count;
-    }
-
-    private void validateCount(int count) {
-        if (isLessThanMinimumOrderCount(count)) {
-            throw new IllegalArgumentException(OrderValidator.INVALID_ORDER_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private boolean isLessThanMinimumOrderCount(int count) {
-        return count < MINIMUM_ORDER_COUNT;
+        this.count = new Count(count);
     }
 
     public boolean isDrink() {
@@ -31,7 +18,7 @@ public class OrderMenu {
     }
 
     public int calculateOrderPrice() {
-        return menu.getPrice() * count;
+        return menu.getPrice() * count.getCount();
     }
 
     public Menu getMenu() {
@@ -39,7 +26,7 @@ public class OrderMenu {
     }
 
     public int getCount() {
-        return count;
+        return count.getCount();
     }
 
     @Override
@@ -47,7 +34,7 @@ public class OrderMenu {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderMenu orderMenu = (OrderMenu) o;
-        return count == orderMenu.count && Objects.equals(menu, orderMenu.menu);
+        return Objects.equals(menu, orderMenu.menu) && Objects.equals(count, orderMenu.count);
     }
 
     @Override
