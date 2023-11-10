@@ -26,6 +26,18 @@ public class OrderMenu {
         return count < MINIMUM_ORDER_COUNT;
     }
 
+    public boolean isDrink() {
+        return menu.isDrink();
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

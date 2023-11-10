@@ -12,4 +12,9 @@ public enum Drink implements Menu {
         this.name = name;
         this.price = price;
     }
+
+    @Override
+    public boolean isDrink() {
+        return true;
+    }
 }
