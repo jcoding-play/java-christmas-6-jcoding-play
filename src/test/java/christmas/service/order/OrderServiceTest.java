@@ -22,8 +22,8 @@ class OrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        MenuRepository menuRepository = new MenuRepository();
-        orderService = new OrderService(menuRepository);
+        OrderMapper orderMapper = new OrderMapper(new MenuRepository());
+        orderService = new OrderService(orderMapper);
     }
 
     @Test

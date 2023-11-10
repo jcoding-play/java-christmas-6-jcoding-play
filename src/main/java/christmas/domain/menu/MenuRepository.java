@@ -25,11 +25,12 @@ public class MenuRepository {
         return new ArrayList<>(store.get(type));
     }
 
-    public Optional<Menu> findByName(String name) {
+    public Menu findByName(String name) {
         return store.values()
                 .stream()
                 .flatMap(Collection::stream)
                 .filter(menu -> menu.isMatchName(name))
-                .findFirst();
+                .findFirst()
+                .orElse(null);
     }
 }
