@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WeekDayDiscount implements Event {
-    private final List<Integer> applicableDates;
+public class WeekDayDiscount extends AbstractEvent {
 
-    public WeekDayDiscount() {
-        this.applicableDates = calculateApplicableDates();
-    }
-
-    private List<Integer> calculateApplicableDates() {
+    @Override
+    List<Integer> calculateApplicableDates() {
         List<Integer> applicableDates = new ArrayList<>();
 
         for (int i = 3; i <= 7; i++) {

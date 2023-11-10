@@ -3,14 +3,10 @@ package christmas.domain.event;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class ChristmasDDayDiscount implements Event {
-    private final List<Integer> applicableDates;
+public class ChristmasDDayDiscount extends AbstractEvent {
 
-    public ChristmasDDayDiscount() {
-        this.applicableDates = calculateApplicableDates();
-    }
-
-    private List<Integer> calculateApplicableDates() {
+    @Override
+    List<Integer> calculateApplicableDates() {
         return IntStream.rangeClosed(1, 25)
                 .boxed()
                 .toList();

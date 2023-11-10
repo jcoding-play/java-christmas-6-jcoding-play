@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WeekEndDiscount implements Event {
-    private final List<Integer> applicableDates;
+public class WeekEndDiscount extends AbstractEvent {
 
-    public WeekEndDiscount() {
-        this.applicableDates = calculateApplicableDates();
-    }
-
-    private List<Integer> calculateApplicableDates() {
+    @Override
+    List<Integer> calculateApplicableDates() {
         List<Integer> applicableDates = new ArrayList<>();
 
         for (int i = 1; i <= 2; i++) {
