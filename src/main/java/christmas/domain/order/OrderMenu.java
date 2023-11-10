@@ -18,7 +18,7 @@ public class OrderMenu {
 
     private void validateCount(int count) {
         if (isLessThanMinimumOrderCount(count)) {
-            throw new IllegalArgumentException(Order.INVALID_ORDER_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(OrderValidator.INVALID_ORDER_EXCEPTION_MESSAGE);
         }
     }
 

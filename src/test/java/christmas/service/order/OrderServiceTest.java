@@ -5,6 +5,7 @@ import christmas.domain.menu.Drink;
 import christmas.domain.menu.MenuRepository;
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
+import christmas.domain.order.OrderValidator;
 import christmas.service.order.dto.OrderDto;
 import christmas.service.order.dto.OrderMenuDto;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -23,7 +24,8 @@ class OrderServiceTest {
     @BeforeEach
     void setUp() {
         OrderMapper orderMapper = new OrderMapper(new MenuRepository());
-        orderService = new OrderService(orderMapper);
+        OrderValidator orderValidator = new OrderValidator();
+        orderService = new OrderService(orderMapper, orderValidator);
     }
 
     @Test
