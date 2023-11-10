@@ -9,8 +9,19 @@ public class OrderMenu {
     private final Count count;
 
     public OrderMenu(Menu menu, int count) {
+        validateMenu(menu);
         this.menu = menu;
         this.count = new Count(count);
+    }
+
+    private void validateMenu(Menu menu) {
+        if (isNotOnTheMenu(menu)) {
+            throw new IllegalArgumentException(OrderValidator.INVALID_ORDER_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean isNotOnTheMenu(Menu menu) {
+        return menu == null;
     }
 
     public boolean isDrink() {
