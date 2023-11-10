@@ -29,7 +29,7 @@ public class OrderMenu {
     }
 
     public int calculateOrderPrice() {
-        return menu.getPrice() * count.getCount();
+        return menu.calculateOrderPrice(count);
     }
 
     public Menu getMenu() {

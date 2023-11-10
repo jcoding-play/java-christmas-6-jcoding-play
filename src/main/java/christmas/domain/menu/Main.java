@@ -1,5 +1,7 @@
 package christmas.domain.menu;
 
+import christmas.domain.order.Count;
+
 public enum Main implements Menu {
     T_BONE_STREAK("티본스테이크", 55000),
     BBQ_RIBS("바비큐립", 54000),
@@ -20,7 +22,7 @@ public enum Main implements Menu {
     }
 
     @Override
-    public int getPrice() {
-        return price;
+    public int calculateOrderPrice(Count count) {
+        return count.multiplyPrice(price);
     }
 }

@@ -22,6 +22,10 @@ public class Count {
         return count < MINIMUM_ORDER_COUNT;
     }
 
+    public int multiplyPrice(int price) {
+        return price * count;
+    }
+
     public int getCount() {
         return count;
     }

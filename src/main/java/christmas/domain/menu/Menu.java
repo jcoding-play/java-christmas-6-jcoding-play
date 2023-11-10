@@ -1,5 +1,7 @@
 package christmas.domain.menu;
 
+import christmas.domain.order.Count;
+
 public interface Menu {
 
     default boolean isDrink() {
@@ -8,5 +10,5 @@ public interface Menu {
 
     boolean isMatchName(String name);
 
-    int getPrice();
+    int calculateOrderPrice(Count count);
 }
