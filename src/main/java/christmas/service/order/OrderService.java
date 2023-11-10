@@ -24,8 +24,11 @@ public class OrderService {
         for (OrderMenuDto orderMenu : orderDto.orderMenus()) {
             String name = orderMenu.name();
             Optional<Menu> menu = menuRepository.findByName(name);
+            if (menu.isEmpty()) {
+                throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            }
 
-            orderMenus.add(new OrderMenu(menu, orderMenu.count()));
+            orderMenus.add(new OrderMenu(menu.get(), orderMenu.count()));
         }
 
         return new Order(orderMenus);

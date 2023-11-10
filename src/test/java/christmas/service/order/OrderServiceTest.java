@@ -8,15 +8,23 @@ import christmas.domain.order.OrderMenu;
 import christmas.service.order.dto.OrderDto;
 import christmas.service.order.dto.OrderMenuDto;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OrderServiceTest {
+    private OrderService orderService;
+
+    @BeforeEach
+    void setUp() {
+        MenuRepository menuRepository = new MenuRepository();
+        orderService = new OrderService(menuRepository);
+    }
 
     @Test
     @DisplayName("주문을 할 수 있다.")
@@ -24,12 +32,19 @@ class OrderServiceTest {
         List<OrderMenuDto> orderMenus = List.of(new OrderMenuDto("타파스", 1), new OrderMenuDto("제로콜라", 1));
         OrderDto orderDto = new OrderDto(orderMenus);
 
-        OrderService orderService = new OrderService(new MenuRepository());
         Order order = orderService.placeOrder(orderDto);
 
         assertThat(order).extracting("orderMenus", InstanceOfAssertFactories.list(OrderMenu.class))
-                .containsExactly(
-                        new OrderMenu(Optional.of(Appetizer.TAPAS), 1),
-                        new OrderMenu(Optional.of(Drink.ZERO_COLA), 1));
+                .containsExactly(new OrderMenu(Appetizer.TAPAS, 1), new OrderMenu(Drink.ZERO_COLA, 1));
+    }
+
+    @Test
+    @DisplayName("메뉴판에 없는 메뉴가 입력된 경우 예외가 발생한다.")
+    void invalidPlaceOrder() {
+        OrderDto orderDto = new OrderDto(List.of(new OrderMenuDto("먹다남은짬뽕밥", 3)));
+
+        assertThatThrownBy(() -> orderService.placeOrder(orderDto))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 }

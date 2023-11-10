@@ -3,7 +3,6 @@ package christmas.domain.order;
 import christmas.domain.menu.Menu;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class OrderMenu {
     private static final int MINIMUM_ORDER_COUNT = 1;
@@ -11,9 +10,9 @@ public class OrderMenu {
     private final Menu menu;
     private final int count;
 
-    public OrderMenu(Optional<Menu> menuOptional, int count) {
+    public OrderMenu(Menu menu, int count) {
         validateCount(count);
-        this.menu = menuOptional.get();
+        this.menu = menu;
         this.count = count;
     }
 
