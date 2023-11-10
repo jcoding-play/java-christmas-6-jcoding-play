@@ -5,4 +5,6 @@ public interface Menu {
     default boolean isDrink() {
         return false;
     }
+
+    int getPrice();
 }

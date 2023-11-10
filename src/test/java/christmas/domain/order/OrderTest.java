@@ -51,4 +51,15 @@ class OrderTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("메뉴는 최대 20개까지만 주문할 수 있습니다. 다시 입력해 주세요. (현재 주문한 메뉴 개수 = 21)");
     }
+
+    @Test
+    @DisplayName("할인 전 총주문 금액을 계산할 수 있다.")
+    void calculateTotalOrderPrice() {
+        List<OrderMenu> orderMenus = List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Drink.ZERO_COLA, 3));
+        Order order = new Order(orderMenus);
+
+        int result = order.calculateTotalOrderPrice();
+
+        assertThat(result).isEqualTo(64000);
+    }
 }

@@ -10,6 +10,7 @@ public class Order {
 
     private static final int MAXIMUM_ORDER_COUNT = 20;
     private static final int INITIAL_COUNT = 0;
+    private static final int INITIAL_PRICE = 0;
 
     private final List<OrderMenu> orderMenus;
 
@@ -65,5 +66,11 @@ public class Order {
 
     private boolean isLargerThanMaximumOrderCount(int totalOrderCount) {
         return totalOrderCount > MAXIMUM_ORDER_COUNT;
+    }
+
+    public int calculateTotalOrderPrice() {
+        return orderMenus.stream()
+                .map(OrderMenu::calculateOrderPrice)
+                .reduce(INITIAL_PRICE, Integer::sum);
     }
 }

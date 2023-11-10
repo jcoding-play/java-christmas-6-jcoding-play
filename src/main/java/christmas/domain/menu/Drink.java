@@ -17,4 +17,9 @@ public enum Drink implements Menu {
     public boolean isDrink() {
         return true;
     }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }

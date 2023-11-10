@@ -11,4 +11,9 @@ public enum Dessert implements Menu {
         this.name = name;
         this.price = price;
     }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }

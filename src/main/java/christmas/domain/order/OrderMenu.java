@@ -30,6 +30,10 @@ public class OrderMenu {
         return menu.isDrink();
     }
 
+    public int calculateOrderPrice() {
+        return menu.getPrice() * count;
+    }
+
     public Menu getMenu() {
         return menu;
     }
