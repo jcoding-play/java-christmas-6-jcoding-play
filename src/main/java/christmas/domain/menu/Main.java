@@ -15,6 +15,11 @@ public enum Main implements Menu {
     }
 
     @Override
+    public boolean isMatchName(String name) {
+        return this.name.equals(name);
+    }
+
+    @Override
     public int getPrice() {
         return price;
     }

@@ -24,4 +24,12 @@ public class MenuRepository {
     public List<Menu> findByType(Type type) {
         return new ArrayList<>(store.get(type));
     }
+
+    public Optional<Menu> findByName(String name) {
+        return store.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(menu -> menu.isMatchName(name))
+                .findFirst();
+    }
 }

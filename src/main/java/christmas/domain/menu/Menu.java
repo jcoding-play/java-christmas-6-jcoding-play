@@ -6,5 +6,7 @@ public interface Menu {
         return false;
     }
 
+    boolean isMatchName(String name);
+
     int getPrice();
 }
