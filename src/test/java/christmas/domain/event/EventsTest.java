@@ -1,4 +1,4 @@
-package christmas.domain.discount;
+package christmas.domain.event;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -8,20 +8,20 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class DiscountEventsTest {
+class EventsTest {
 
     @Test
-    @DisplayName("진행하는 할인 종류를 알 수 있다.")
-    void createDiscountEvents() {
-        List<DiscountEvent> events = List.of(
+    @DisplayName("진행하는 이벤트 종류를 알 수 있다.")
+    void findEvents() {
+        List<Event> eventList = List.of(
                 new ChristmasDDayDiscount(),
                 new WeekDayDiscount(),
                 new WeekEndDiscount(),
                 new SpecialDiscount(),
                 new GiftEvent());
-        DiscountEvents discountEvents = new DiscountEvents(events);
+        Events events = new Events(eventList);
 
-        assertThat(discountEvents).extracting("discountEvents", InstanceOfAssertFactories.list(DiscountEvent.class))
+        assertThat(events).extracting("events", InstanceOfAssertFactories.list(Event.class))
                 .hasSize(5);
     }
 }
