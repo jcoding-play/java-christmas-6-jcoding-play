@@ -20,10 +20,19 @@ class InputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a", "!", "12A"})
-    @DisplayName("입력이 숫자가 아니면 예외가 발생한다.")
+    @DisplayName("예상 방문 날짜에 대한 입력이 숫자가 아니면 예외가 발생한다.")
     void validateDate(String input) {
         assertThatThrownBy(() -> InputValidator.validateDate(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("예상 방문 날짜에 대한 입력은 숫자만 가능합니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"tapas-1", "타파스=1", "타파스,1", "타파스-one", "타파스-1-제로콜라-1", "타파스-1,,제로콜라-1"})
+    @DisplayName("메뉴 입력 형식이 올바르지 않으면 예외가 발생한다.")
+    void validateMenuAndCount(String input) {
+        assertThatThrownBy(() -> InputValidator.validateMenuAndCount(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 }
