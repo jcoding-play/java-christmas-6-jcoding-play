@@ -23,6 +23,12 @@ public class WeekDayDiscount extends AbstractEvent {
     }
 
     @Override
+    public boolean isApplicable(VisitDate visitDate, Order order) {
+        return super.isApplicable(visitDate, order) &&
+                order.countNumberOfDessert() > 0;
+    }
+
+    @Override
     public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
         int numberOfDessert = order.countNumberOfDessert();
         return numberOfDessert * 2023;

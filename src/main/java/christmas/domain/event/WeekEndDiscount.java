@@ -23,6 +23,12 @@ public class WeekEndDiscount extends AbstractEvent {
     }
 
     @Override
+    public boolean isApplicable(VisitDate visitDate, Order order) {
+        return super.isApplicable(visitDate, order) &&
+                order.countNumberOfMain() > 0;
+    }
+
+    @Override
     public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
         int numberOfMain = order.countNumberOfMain();
         return numberOfMain * 2023;

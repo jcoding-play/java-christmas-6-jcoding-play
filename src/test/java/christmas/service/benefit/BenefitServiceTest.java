@@ -36,10 +36,9 @@ class BenefitServiceTest {
         BenefitDetails benefitDetails = benefitService.checkApplicableBenefitDetails(visitDate, order);
         Map<Event, Integer> result = benefitDetails.getBenefitDetails();
 
-        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.size()).isEqualTo(2);
         assertThat(result).contains(
                 entry(new ChristmasDDayDiscount(), 3400),
-                entry(new WeekDayDiscount(), 0),
                 entry(new SpecialDiscount(), 1000)
         );
     }

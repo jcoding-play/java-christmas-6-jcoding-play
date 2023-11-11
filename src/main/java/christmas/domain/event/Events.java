@@ -18,21 +18,21 @@ public class Events {
     }
 
     public Map<Event, Integer> checkApplicableEvents(VisitDate visitDate, Order order) {
-        List<Event> applicableEvents = findApplicableEvents(visitDate, order.calculateTotalOrderPrice());
+        List<Event> applicableEvents = findApplicableEvents(visitDate, order);
 
         return calculateEachDiscountedAmountOf(applicableEvents, visitDate, order);
     }
 
-    public List<Event> findApplicableEvents(VisitDate visitDate, int totalOrderPrice) {
-        if (totalOrderPrice < MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE) {
+    public List<Event> findApplicableEvents(VisitDate visitDate, Order order) {
+        if (order.calculateTotalOrderPrice() < MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE) {
             return Collections.emptyList();
         }
-        return findApplicableEvent(visitDate, totalOrderPrice);
+        return findApplicableEvent(visitDate, order);
     }
 
-    private List<Event> findApplicableEvent(VisitDate visitDate, int totalOrderPrice) {
+    private List<Event> findApplicableEvent(VisitDate visitDate, Order order) {
         return events.stream()
-                .filter(event -> event.isApplicable(visitDate, totalOrderPrice))
+                .filter(event -> event.isApplicable(visitDate, order))
                 .toList();
     }
 
