@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class VisitDate {
@@ -22,6 +23,10 @@ public class VisitDate {
         if (date < MIN_DATE || date > MAX_DATE) {
             throw new IllegalArgumentException(INVALID_DATE_EXCEPTION_MESSAGE);
         }
+    }
+
+    public boolean isIncludedIn(List<Integer> applicableDates) {
+        return applicableDates.contains(date);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package christmas.domain.event;
 
+import christmas.domain.VisitDate;
+
 public interface Event {
 
-    boolean isApplicable(int date, int totalOrderPrice);
+    boolean isApplicable(VisitDate visitDate, int totalOrderPrice);
 }

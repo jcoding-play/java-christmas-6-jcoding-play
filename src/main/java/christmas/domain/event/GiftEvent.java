@@ -1,5 +1,7 @@
 package christmas.domain.event;
 
+import christmas.domain.VisitDate;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -14,7 +16,7 @@ public class GiftEvent extends AbstractEvent {
     }
 
     @Override
-    public boolean isApplicable(int date, int totalOrderPrice) {
-        return super.isApplicable(date, totalOrderPrice) && totalOrderPrice >= MINIMUM_APPLICABLE_ORDER_PRICE;
+    public boolean isApplicable(VisitDate visitDate, int totalOrderPrice) {
+        return super.isApplicable(visitDate, totalOrderPrice) && totalOrderPrice >= MINIMUM_APPLICABLE_ORDER_PRICE;
     }
 }
