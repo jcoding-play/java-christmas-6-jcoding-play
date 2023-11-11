@@ -17,6 +17,11 @@ public class GiftEvent extends AbstractEvent {
     }
 
     @Override
+    public boolean isGiftEvent() {
+        return true;
+    }
+
+    @Override
     public boolean isApplicable(VisitDate visitDate, Order order) {
         return super.isApplicable(visitDate, order) &&
                 order.calculateTotalOrderPrice() >= MINIMUM_APPLICABLE_ORDER_PRICE;

@@ -5,6 +5,10 @@ import christmas.domain.order.Order;
 
 public interface Event {
 
+    default boolean isGiftEvent() {
+        return false;
+    }
+
     boolean isApplicable(VisitDate visitDate, Order order);
 
     int calculateDiscountedAmount(VisitDate visitDate, Order order);
