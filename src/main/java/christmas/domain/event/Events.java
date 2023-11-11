@@ -1,9 +1,12 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
+import christmas.domain.order.Order;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Events {
     private static final int MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE = 10000;
@@ -12,6 +15,12 @@ public class Events {
 
     public Events(List<Event> events) {
         this.events = events;
+    }
+
+    public Map<Event, Integer> checkApplicableEvents(VisitDate visitDate, Order order) {
+        List<Event> applicableEvents = findApplicableEvents(visitDate, order.calculateTotalOrderPrice());
+
+        return calculateEachDiscountedAmountOf(applicableEvents, visitDate, order);
     }
 
     public List<Event> findApplicableEvents(VisitDate visitDate, int totalOrderPrice) {
@@ -25,5 +34,12 @@ public class Events {
         return events.stream()
                 .filter(event -> event.isApplicable(visitDate, totalOrderPrice))
                 .toList();
+    }
+
+    private Map<Event, Integer> calculateEachDiscountedAmountOf(List<Event> applicableEvents, VisitDate visitDate, Order order) {
+        return applicableEvents.stream()
+                .collect(Collectors.toMap(
+                        event -> event,
+                        event -> event.calculateDiscountedAmount(visitDate, order)));
     }
 }

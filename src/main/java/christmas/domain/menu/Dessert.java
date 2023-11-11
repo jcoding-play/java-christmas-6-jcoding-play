@@ -15,6 +15,11 @@ public enum Dessert implements Menu {
     }
 
     @Override
+    public boolean isDessert() {
+        return true;
+    }
+
+    @Override
     public boolean isMatchName(String name) {
         return this.name.equals(name);
     }

@@ -1,5 +1,8 @@
 package christmas.domain.event;
 
+import christmas.domain.VisitDate;
+import christmas.domain.order.Order;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,5 +20,11 @@ public class WeekEndDiscount extends AbstractEvent {
         }
         Collections.sort(applicableDates);
         return applicableDates;
+    }
+
+    @Override
+    public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
+        int numberOfMain = order.countNumberOfMain();
+        return numberOfMain * 2023;
     }
 }

@@ -1,5 +1,7 @@
 package christmas.domain.order;
 
+import christmas.domain.menu.Menu;
+
 import java.util.List;
 
 public class Order {
@@ -19,5 +21,19 @@ public class Order {
 
     public void validate(OrderValidator orderValidator) {
         orderValidator.validate(orderMenus);
+    }
+
+    public int countNumberOfDessert() {
+        return (int) orderMenus.stream()
+                .map(OrderMenu::getMenu)
+                .filter(Menu::isDessert)
+                .count();
+    }
+
+    public int countNumberOfMain() {
+        return (int) orderMenus.stream()
+                .map(OrderMenu::getMenu)
+                .filter(Menu::isMain)
+                .count();
     }
 }

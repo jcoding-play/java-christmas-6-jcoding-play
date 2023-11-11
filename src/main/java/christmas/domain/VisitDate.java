@@ -29,6 +29,10 @@ public class VisitDate {
         return applicableDates.contains(date);
     }
 
+    public int calculateDifferenceInDate(int date) {
+        return this.date - date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

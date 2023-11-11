@@ -17,6 +17,11 @@ public enum Main implements Menu {
     }
 
     @Override
+    public boolean isMain() {
+        return true;
+    }
+
+    @Override
     public boolean isMatchName(String name) {
         return this.name.equals(name);
     }
