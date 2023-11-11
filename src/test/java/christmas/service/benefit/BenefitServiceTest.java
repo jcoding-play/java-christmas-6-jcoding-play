@@ -1,6 +1,6 @@
 package christmas.service.benefit;
 
-import christmas.domain.BenefitDetails;
+import christmas.domain.benefit.BenefitDetails;
 import christmas.domain.VisitDate;
 import christmas.domain.event.*;
 import christmas.domain.menu.Drink;
