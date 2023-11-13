@@ -6,6 +6,7 @@ import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.*;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
+import christmas.domain.menu.Menu;
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,5 +53,12 @@ class BenefitServiceTest {
     void checkEventBadge(int totalBenefitAmount, EventBadge expected) {
         EventBadge actual = benefitService.checkEventBadge(totalBenefitAmount);
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("증정 메뉴를 받을 수 있다.")
+    void getGiftMenu() {
+        Menu giftMenu = benefitService.getGiftMenu();
+        assertThat(giftMenu).isEqualTo(Drink.CHAMPAGNE);
     }
 }
