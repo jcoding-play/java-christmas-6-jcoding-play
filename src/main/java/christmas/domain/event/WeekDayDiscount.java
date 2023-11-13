@@ -33,4 +33,9 @@ public class WeekDayDiscount extends AbstractEvent {
         int numberOfDessert = order.countNumberOfDessert();
         return numberOfDessert * 2023;
     }
+
+    @Override
+    public String getName() {
+        return "평일 할인";
+    }
 }

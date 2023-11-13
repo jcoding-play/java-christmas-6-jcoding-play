@@ -12,4 +12,6 @@ public interface Event {
     boolean isApplicable(VisitDate visitDate, Order order);
 
     int calculateDiscountedAmount(VisitDate visitDate, Order order);
+
+    String getName();
 }

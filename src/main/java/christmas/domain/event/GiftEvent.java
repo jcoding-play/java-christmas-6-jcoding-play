@@ -31,4 +31,9 @@ public class GiftEvent extends AbstractEvent {
     public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
         return 25000;
     }
+
+    @Override
+    public String getName() {
+        return "증정 이벤트";
+    }
 }

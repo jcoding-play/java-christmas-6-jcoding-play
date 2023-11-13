@@ -16,4 +16,9 @@ public class SpecialDiscount extends AbstractEvent {
     public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
         return 1000;
     }
+
+    @Override
+    public String getName() {
+        return "특별 할인";
+    }
 }

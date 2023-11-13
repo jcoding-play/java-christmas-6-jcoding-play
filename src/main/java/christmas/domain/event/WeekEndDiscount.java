@@ -33,4 +33,9 @@ public class WeekEndDiscount extends AbstractEvent {
         int numberOfMain = order.countNumberOfMain();
         return numberOfMain * 2023;
     }
+
+    @Override
+    public String getName() {
+        return "주말 할인";
+    }
 }

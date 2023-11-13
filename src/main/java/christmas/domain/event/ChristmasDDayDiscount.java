@@ -24,4 +24,9 @@ public class ChristmasDDayDiscount extends AbstractEvent {
 
         return startingDiscountAmount + additionalDiscountAmount;
     }
+
+    @Override
+    public String getName() {
+        return "크리스마스 디데이 할인";
+    }
 }
