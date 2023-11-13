@@ -18,7 +18,7 @@ public class BenefitService {
         this.events = events;
     }
 
-    public EventBenefits checkApplicableBenefitDetails(VisitDate visitDate, Order order) {
+    public EventBenefits checkApplicableEventBenefits(VisitDate visitDate, Order order) {
         Map<Event, Integer> benefitDetails = events.checkApplicableEvents(visitDate, order);
 
         return new EventBenefits(benefitDetails);
