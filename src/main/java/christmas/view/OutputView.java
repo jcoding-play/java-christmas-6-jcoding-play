@@ -11,6 +11,8 @@ public class OutputView {
     private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
     private static final String ORDER_MENU_MESSAGE_PREFIX = "<주문 메뉴>";
     private static final String ORDER_MENU_MESSAGE_FORMAT = "%s %d개";
+    private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
+    private static final String TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX = "<할인 전 총주문 금액>";
 
     public void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -35,5 +37,16 @@ public class OutputView {
 
     private String generateOrderMenuMessage(OrderMenuDto orderMenu) {
         return String.format(ORDER_MENU_MESSAGE_FORMAT, orderMenu.name(), orderMenu.count());
+    }
+
+    public void printTotalOrderAmount(int totalOrderAmount) {
+        System.out.println(TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX);
+
+        String totalOrderAmountMessage = generateAmountMessage(totalOrderAmount);
+        System.out.println(totalOrderAmountMessage);
+    }
+
+    private String generateAmountMessage(int totalOrderAmount) {
+        return String.format(AMOUNT_MESSAGE_FORMAT, totalOrderAmount);
     }
 }
