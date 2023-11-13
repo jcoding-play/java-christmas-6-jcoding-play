@@ -17,6 +17,7 @@ import christmas.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class MainController {
@@ -34,11 +35,20 @@ public class MainController {
         this.outputView = outputView;
     }
 
+    private <T> T repeatTemplate(Supplier<T> inputReader) {
+        try {
+            return inputReader.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return repeatTemplate(inputReader);
+        }
+    }
+
     public void run() {
         outputView.printStartMessage(MONTH_OF_THE_EVENT);
         
-        VisitDate visitDate = selectVisitDate();
-        Order order = placeOrder();
+        VisitDate visitDate = repeatTemplate(this::selectVisitDate);
+        Order order = repeatTemplate(this::placeOrder);
 
         checkEventBenefits(order, visitDate);
     }
