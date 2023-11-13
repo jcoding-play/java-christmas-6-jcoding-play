@@ -1,5 +1,7 @@
 package christmas.domain.order;
 
+import christmas.utils.Constants;
+
 import java.util.List;
 
 public class OrderValidator {
@@ -9,7 +11,6 @@ public class OrderValidator {
             "메뉴는 최대 20개까지만 주문할 수 있습니다. 다시 입력해 주세요. (현재 주문한 메뉴 개수 = %d)";
 
     private static final int MAXIMUM_ORDER_COUNT = 20;
-    private static final int INITIAL_COUNT = 0;
 
     public void validate(List<OrderMenu> orderMenus) {
         validateEmptyOrder(orderMenus);
@@ -60,7 +61,7 @@ public class OrderValidator {
     private int calculateTotalOrderCount(List<OrderMenu> orderMenus) {
         return orderMenus.stream()
                 .map(OrderMenu::getCount)
-                .reduce(INITIAL_COUNT, Integer::sum);
+                .reduce(Constants.INITIAL_COUNT, Integer::sum);
     }
 
     private boolean isLargerThanMaximumOrderCount(int totalOrderCount) {

@@ -2,13 +2,12 @@ package christmas.domain.benefit;
 
 import christmas.domain.event.Event;
 import christmas.domain.event.GiftEvent;
+import christmas.utils.Constants;
 
 import java.util.Collections;
 import java.util.Map;
 
 public class EventBenefits {
-    private static final int INITIAL_BENEFIT_AMOUNT = 0;
-
     private final Map<Event, Integer> benefitDetails;
 
     public EventBenefits(Map<Event, Integer> benefitDetails) {
@@ -18,7 +17,7 @@ public class EventBenefits {
     public int calculateTotalBenefitAmount() {
         return benefitDetails.values()
                 .stream()
-                .reduce(INITIAL_BENEFIT_AMOUNT, Integer::sum);
+                .reduce(Constants.INITIAL_AMOUNT, Integer::sum);
     }
 
     public int calculateEstimatedPaymentAmount(int totalOrderAmount, int totalBenefitAmount) {
