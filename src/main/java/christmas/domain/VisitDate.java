@@ -33,6 +33,14 @@ public class VisitDate {
         return this.date - date;
     }
 
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
