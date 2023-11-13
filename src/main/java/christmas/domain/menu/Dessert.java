@@ -28,4 +28,9 @@ public enum Dessert implements Menu {
     public int calculateOrderPrice(Count count) {
         return count.multiplyPrice(price);
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }

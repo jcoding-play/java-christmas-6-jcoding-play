@@ -2,6 +2,7 @@ package christmas.domain.order;
 
 import christmas.domain.menu.Menu;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Order {
@@ -35,5 +36,9 @@ public class Order {
                 .map(OrderMenu::getMenu)
                 .filter(Menu::isMain)
                 .count();
+    }
+
+    public List<OrderMenu> getOrderMenus() {
+        return Collections.unmodifiableList(orderMenus);
     }
 }

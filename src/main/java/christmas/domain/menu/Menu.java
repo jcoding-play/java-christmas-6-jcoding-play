@@ -19,4 +19,6 @@ public interface Menu {
     boolean isMatchName(String name);
 
     int calculateOrderPrice(Count count);
+
+    String getName();
 }
