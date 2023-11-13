@@ -28,4 +28,8 @@ public enum EventBadge {
         return eventBadge.predicate
                 .test(totalBenefitAmount);
     }
+
+    public String getName() {
+        return name;
+    }
 }
