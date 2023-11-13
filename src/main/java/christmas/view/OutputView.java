@@ -19,6 +19,7 @@ public class OutputView {
     private static final String BENEFIT_DETAILS_MESSAGE_PREFIX = "<혜택 내역>";
     private static final String TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX = "<총혜택 금액>";
     private static final String ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX = "<할인 후 예상 결제 금액>";
+    private static final String EVENT_BADGE_MESSAGE_PREFIX = "<12월 이벤트 배지>";
 
     public void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -94,5 +95,10 @@ public class OutputView {
 
         String estimatedPaymentAmountMessage = generateAmountMessage(estimatedPaymentAmount);
         System.out.println(estimatedPaymentAmountMessage);
+    }
+
+    public void printEventBadge(String name) {
+        System.out.println(EVENT_BADGE_MESSAGE_PREFIX);
+        System.out.println(name);
     }
 }
