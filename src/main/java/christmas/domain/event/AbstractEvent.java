@@ -10,10 +10,10 @@ public abstract class AbstractEvent implements Event {
     private final List<Integer> applicableDates;
 
     public AbstractEvent() {
-        this.applicableDates = calculateApplicableDates();
+        this.applicableDates = initializeApplicableDates();
     }
 
-    abstract List<Integer> calculateApplicableDates();
+    abstract List<Integer> initializeApplicableDates();
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Order order) {
