@@ -33,7 +33,7 @@ class BenefitServiceTest {
     @Test
     @DisplayName("고객에게 적용 가능한 총혜택 내역을 확인할 수 있다.")
     void checkApplicableBenefitDetails() {
-        VisitDate visitDate = new VisitDate(25);
+        VisitDate visitDate = new VisitDate(12, 25);
         Order order = new Order(List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Drink.ZERO_COLA, 3)));
 
         BenefitDetails benefitDetails = benefitService.checkApplicableBenefitDetails(visitDate, order);

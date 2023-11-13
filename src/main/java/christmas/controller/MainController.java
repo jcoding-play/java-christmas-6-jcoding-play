@@ -38,7 +38,7 @@ public class MainController {
     public void run() {
         outputView.printStartMessage(MONTH_OF_THE_EVENT);
         int date = inputView.readDate(MONTH_OF_THE_EVENT);
-        VisitDate visitDate = new VisitDate(date);
+        VisitDate visitDate = new VisitDate(MONTH_OF_THE_EVENT, date);
 
         String menuAndCounts = inputView.readMenuAndCount();
         OrderDto orderDto = toDto(menuAndCounts);

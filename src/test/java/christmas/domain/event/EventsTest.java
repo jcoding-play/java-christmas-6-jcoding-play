@@ -2,7 +2,6 @@ package christmas.domain.event;
 
 import christmas.domain.VisitDate;
 import christmas.domain.menu.Dessert;
-import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
@@ -42,7 +41,7 @@ class EventsTest {
     void findApplicableEvents_V1() {
         Order order = new Order(
                 List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(25), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), order);
 
         assertThat(result).containsExactly(
                 new ChristmasDDayDiscount(), new WeekDayDiscount(), new SpecialDiscount());
@@ -53,7 +52,7 @@ class EventsTest {
     void findApplicableEvents_V2() {
         Order order = new Order(
                 List.of(new OrderMenu(Main.T_BONE_STREAK, 3), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(25), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), order);
 
         assertThat(result).containsExactly(
                 new ChristmasDDayDiscount(), new WeekDayDiscount(), new SpecialDiscount(), new GiftEvent());
@@ -65,7 +64,7 @@ class EventsTest {
     void findApplicableEvents_V3(int date) {
         Order order = new Order(
                 List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(date), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, date), order);
 
         assertThat(result).containsExactly(new ChristmasDDayDiscount(), new WeekEndDiscount());
     }
@@ -75,7 +74,7 @@ class EventsTest {
     void findApplicableEvents_V4() {
         Order order = new Order(
                 List.of(new OrderMenu(Main.T_BONE_STREAK, 3), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(26), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 26), order);
 
         assertThat(result).containsExactly(new WeekDayDiscount(), new GiftEvent());
     }
@@ -85,7 +84,7 @@ class EventsTest {
     void findApplicableEvents_V5() {
         Order order = new Order(
                 List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(31), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 31), order);
 
         assertThat(result).containsExactly(new WeekDayDiscount(), new SpecialDiscount());
     }
@@ -95,7 +94,7 @@ class EventsTest {
     void findApplicableEvents_V6() {
         Order order = new Order(
                 List.of(new OrderMenu(Dessert.ICE_CREAM, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(31), order);
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 31), order);
 
         assertThat(result).isEmpty();
     }

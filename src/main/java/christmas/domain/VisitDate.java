@@ -4,18 +4,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class VisitDate {
-    private static final int DECEMBER = 12;
+    private static final String INVALID_DATE_EXCEPTION_MESSAGE = "유효하지 않은 날짜입니다. 다시 입력해 주세요.";
     private static final int MIN_DATE = 1;
     private static final int MAX_DATE = 31;
-    private static final String INVALID_DATE_EXCEPTION_MESSAGE = "유효하지 않은 날짜입니다. 다시 입력해 주세요.";
 
     private final int month;
     private final int date;
 
-    public VisitDate(int date) {
+    public VisitDate(int month, int date) {
         validateDate(date);
 
-        this.month = DECEMBER;
+        this.month = month;
         this.date = date;
     }
 
