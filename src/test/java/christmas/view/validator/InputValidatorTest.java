@@ -24,7 +24,7 @@ class InputValidatorTest {
     void validateDate(String input) {
         assertThatThrownBy(() -> InputValidator.validateDate(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("예상 방문 날짜에 대한 입력은 숫자만 가능합니다.");
+                .hasMessageContaining("유효하지 않은 날짜입니다. 다시 입력해 주세요.");
     }
 
     @ParameterizedTest
