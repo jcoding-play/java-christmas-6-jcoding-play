@@ -19,14 +19,13 @@ public enum EventBadge {
 
     public static EventBadge of(int totalBenefitAmount) {
         return Arrays.stream(values())
-                .filter(eventBadge -> isMatch(eventBadge, totalBenefitAmount))
+                .filter(eventBadge -> eventBadge.isMatch(totalBenefitAmount))
                 .findFirst()
                 .orElse(NOTHING);
     }
 
-    private static boolean isMatch(EventBadge eventBadge, int totalBenefitAmount) {
-        return eventBadge.predicate
-                .test(totalBenefitAmount);
+    private boolean isMatch(int totalBenefitAmount) {
+        return predicate.test(totalBenefitAmount);
     }
 
     public String getName() {
