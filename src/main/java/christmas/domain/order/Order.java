@@ -14,9 +14,9 @@ public class Order {
         this.orderMenus = orderMenus;
     }
 
-    public int calculateTotalOrderPrice() {
+    public int calculateTotalOrderAmount() {
         return orderMenus.stream()
-                .map(OrderMenu::calculateOrderPrice)
+                .map(OrderMenu::calculateOrderAmount)
                 .reduce(INITIAL_PRICE, Integer::sum);
     }
 

@@ -27,7 +27,7 @@ public enum Main implements Menu {
     }
 
     @Override
-    public int calculateOrderPrice(Count count) {
+    public int calculateOrderAmount(Count count) {
         return count.multiplyPrice(price);
     }
 

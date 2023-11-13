@@ -1,6 +1,6 @@
 package christmas.service.benefit;
 
-import christmas.domain.benefit.BenefitDetails;
+import christmas.domain.benefit.EventBenefits;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.Event;
@@ -16,10 +16,10 @@ public class BenefitService {
         this.events = events;
     }
 
-    public BenefitDetails checkApplicableBenefitDetails(VisitDate visitDate, Order order) {
+    public EventBenefits checkApplicableBenefitDetails(VisitDate visitDate, Order order) {
         Map<Event, Integer> benefitDetails = events.checkApplicableEvents(visitDate, order);
 
-        return new BenefitDetails(benefitDetails);
+        return new EventBenefits(benefitDetails);
     }
 
     public EventBadge checkEventBadge(int totalBenefitAmount) {

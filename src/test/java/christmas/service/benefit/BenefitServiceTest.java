@@ -1,6 +1,6 @@
 package christmas.service.benefit;
 
-import christmas.domain.benefit.BenefitDetails;
+import christmas.domain.benefit.EventBenefits;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.*;
@@ -36,8 +36,8 @@ class BenefitServiceTest {
         VisitDate visitDate = new VisitDate(12, 25);
         Order order = new Order(List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Drink.ZERO_COLA, 3)));
 
-        BenefitDetails benefitDetails = benefitService.checkApplicableBenefitDetails(visitDate, order);
-        Map<Event, Integer> result = benefitDetails.getBenefitDetails();
+        EventBenefits eventBenefits = benefitService.checkApplicableBenefitDetails(visitDate, order);
+        Map<Event, Integer> result = eventBenefits.getBenefitDetails();
 
         assertThat(result.size()).isEqualTo(2);
         assertThat(result).contains(

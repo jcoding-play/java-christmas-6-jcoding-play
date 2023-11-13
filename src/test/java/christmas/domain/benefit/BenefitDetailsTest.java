@@ -14,9 +14,9 @@ class BenefitDetailsTest {
     @DisplayName("총혜택 금액을 알 수 있다.")
     void calculateTotalBenefitAmount() {
         Map<Event, Integer> result = Map.of(new GiftEvent(), 25000, new ChristmasDDayDiscount(), 3400);
-        BenefitDetails benefitDetails = new BenefitDetails(result);
+        EventBenefits eventBenefits = new EventBenefits(result);
 
-        int totalBenefitAmount = benefitDetails.calculateTotalBenefitAmount();
+        int totalBenefitAmount = eventBenefits.calculateTotalBenefitAmount();
 
         assertThat(totalBenefitAmount).isEqualTo(28400);
     }
@@ -27,11 +27,11 @@ class BenefitDetailsTest {
         Map<Event, Integer> result = Map.of(
                 new ChristmasDDayDiscount(), 1200, new WeekDayDiscount(), 4046,
                 new SpecialDiscount(), 1000, new GiftEvent(), 25000);
-        BenefitDetails benefitDetails = new BenefitDetails(result);
+        EventBenefits eventBenefits = new EventBenefits(result);
 
         int totalOrderPrice = 142000;
         int totalBenefitAmount = 31246;
-        int estimatedPaymentAmount = benefitDetails.calculateEstimatedPaymentAmount(totalOrderPrice, totalBenefitAmount);
+        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderPrice, totalBenefitAmount);
 
         assertThat(estimatedPaymentAmount).isEqualTo(135754);
     }

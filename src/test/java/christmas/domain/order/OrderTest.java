@@ -26,7 +26,7 @@ class OrderTest {
     void calculateTotalOrderPrice() {
         Order order = new Order(List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Drink.ZERO_COLA, 3)));
 
-        int result = order.calculateTotalOrderPrice();
+        int result = order.calculateTotalOrderAmount();
 
         assertThat(result).isEqualTo(64000);
     }

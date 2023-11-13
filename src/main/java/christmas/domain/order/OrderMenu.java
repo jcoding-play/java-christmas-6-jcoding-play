@@ -28,8 +28,8 @@ public class OrderMenu {
         return menu.isDrink();
     }
 
-    public int calculateOrderPrice() {
-        return menu.calculateOrderPrice(count);
+    public int calculateOrderAmount() {
+        return menu.calculateOrderAmount(count);
     }
 
     public Menu getMenu() {

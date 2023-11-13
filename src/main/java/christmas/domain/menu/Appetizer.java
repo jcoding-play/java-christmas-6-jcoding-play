@@ -21,7 +21,7 @@ public enum Appetizer implements Menu {
     }
 
     @Override
-    public int calculateOrderPrice(Count count) {
+    public int calculateOrderAmount(Count count) {
         return count.multiplyPrice(price);
     }
 

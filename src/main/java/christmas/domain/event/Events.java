@@ -24,7 +24,7 @@ public class Events {
     }
 
     public List<Event> findApplicableEvents(VisitDate visitDate, Order order) {
-        if (order.calculateTotalOrderPrice() < MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE) {
+        if (order.calculateTotalOrderAmount() < MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE) {
             return Collections.emptyList();
         }
         return findApplicableEvent(visitDate, order);
