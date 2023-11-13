@@ -17,6 +17,7 @@ public class OutputView {
     private static final String GIFT_MENU_MESSAGE_PREFIX = "<증정 메뉴>";
     private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: -%s";
     private static final String BENEFIT_DETAILS_MESSAGE_PREFIX = "<혜택 내역>";
+    private static final String TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX = "<총혜택 금액>";
 
     public void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -78,5 +79,12 @@ public class OutputView {
     private String generateBenefitDetailsMessage(String event, int discountedAmount) {
         String discountedAmountMessage = generateAmountMessage(discountedAmount);
         return String.format(BENEFIT_DETAILS_MESSAGE_FORMAT, event, discountedAmountMessage);
+    }
+
+    public void printTotalBenefitAmount(int totalBenefitAmount) {
+        System.out.println(TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX);
+
+        String totalBenefitAmountMessage = generateAmountMessage(totalBenefitAmount * -1);
+        System.out.println(totalBenefitAmountMessage);
     }
 }
