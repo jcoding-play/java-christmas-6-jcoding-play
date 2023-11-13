@@ -6,8 +6,8 @@ import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.Event;
 import christmas.domain.menu.Menu;
 import christmas.domain.order.Order;
-import christmas.domain.order.OrderMenu;
 import christmas.service.benefit.BenefitService;
+import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
 import christmas.dto.OrderDto;
 import christmas.dto.OrderMenuDto;
@@ -23,12 +23,15 @@ import java.util.stream.Collectors;
 public class MainController {
     private static final int MONTH_OF_THE_EVENT = 12;
 
+    private final OrderMapper orderMapper;
     private final OrderService orderService;
     private final BenefitService benefitService;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public MainController(OrderService orderService, BenefitService benefitService, InputView inputView, OutputView outputView) {
+    public MainController(OrderMapper orderMapper, OrderService orderService, BenefitService benefitService,
+                          InputView inputView, OutputView outputView) {
+        this.orderMapper = orderMapper;
         this.orderService = orderService;
         this.benefitService = benefitService;
         this.inputView = inputView;
@@ -62,7 +65,7 @@ public class MainController {
         String menuAndCounts = inputView.readMenuAndCount();
         OrderDto orderDto = toDto(menuAndCounts);
 
-        return orderService.placeOrder(orderDto);
+        return orderService.placeOrder(orderMapper, orderDto);
     }
 
     private void checkEventBenefits(Order order, VisitDate visitDate) {
@@ -77,8 +80,8 @@ public class MainController {
     }
 
     private void showOrderInformation(Order order, int totalOrderAmount) {
-        List<OrderMenuDto> orderMenus = toDto(order.getOrderMenus());
-        outputView.printMenu(orderMenus);
+        OrderDto orderDto = orderMapper.toDto(order);
+        outputView.printMenu(orderDto.orderMenus());
 
         outputView.printTotalOrderAmount(totalOrderAmount);
     }
@@ -141,18 +144,5 @@ public class MainController {
         }
 
         return new OrderDto(orderMenus);
-    }
-
-    private List<OrderMenuDto> toDto(List<OrderMenu> orderMenus) {
-        return orderMenus.stream()
-                .map(this::generateOrderMenuDto)
-                .toList();
-    }
-
-    private OrderMenuDto generateOrderMenuDto(OrderMenu orderMenu) {
-        Menu menu = orderMenu.getMenu();
-        int count = orderMenu.getCount();
-
-        return new OrderMenuDto(menu.getName(), count);
     }
 }

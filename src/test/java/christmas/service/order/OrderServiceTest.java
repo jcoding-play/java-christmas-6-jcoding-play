@@ -20,12 +20,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OrderServiceTest {
     private OrderService orderService;
+    private OrderMapper orderMapper;
 
     @BeforeEach
     void setUp() {
-        OrderMapper orderMapper = new OrderMapper(new MenuRepository());
         OrderValidator orderValidator = new OrderValidator();
-        orderService = new OrderService(orderMapper, orderValidator);
+        orderService = new OrderService(orderValidator);
+        orderMapper = new OrderMapper(new MenuRepository());
     }
 
     @Test
@@ -34,7 +35,7 @@ class OrderServiceTest {
         List<OrderMenuDto> orderMenus = List.of(new OrderMenuDto("타파스", 1), new OrderMenuDto("제로콜라", 1));
         OrderDto orderDto = new OrderDto(orderMenus);
 
-        Order order = orderService.placeOrder(orderDto);
+        Order order = orderService.placeOrder(orderMapper, orderDto);
 
         assertThat(order).extracting("orderMenus", InstanceOfAssertFactories.list(OrderMenu.class))
                 .containsExactly(new OrderMenu(Appetizer.TAPAS, 1), new OrderMenu(Drink.ZERO_COLA, 1));
@@ -45,7 +46,7 @@ class OrderServiceTest {
     void invalidPlaceOrder() {
         OrderDto orderDto = new OrderDto(List.of(new OrderMenuDto("먹다남은짬뽕밥", 3)));
 
-        assertThatThrownBy(() -> orderService.placeOrder(orderDto))
+        assertThatThrownBy(() -> orderService.placeOrder(orderMapper, orderDto))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }

@@ -17,21 +17,39 @@ public class OrderMapper {
         this.menuRepository = menuRepository;
     }
 
-    public Order mapFrom(OrderDto orderDto) {
+    public Order toEntity(OrderDto orderDto) {
         List<OrderMenuDto> orderMenus = orderDto.orderMenus();
         return mapOrder(orderMenus);
     }
 
     private Order mapOrder(List<OrderMenuDto> orderMenus) {
         return orderMenus.stream()
-                .map(this::mapOrderMenuFrom)
+                .map(this::mapOrderMenu)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Order::new));
     }
 
-    private OrderMenu mapOrderMenuFrom(OrderMenuDto orderMenu) {
+    private OrderMenu mapOrderMenu(OrderMenuDto orderMenu) {
         Menu menu = menuRepository.findByName(orderMenu.name());
         int count = orderMenu.count();
 
         return new OrderMenu(menu, count);
+    }
+
+    public OrderDto toDto(Order order) {
+        List<OrderMenu> orderMenus = order.getOrderMenus();
+        return mapOrderDto(orderMenus);
+    }
+
+    private OrderDto mapOrderDto(List<OrderMenu> orderMenus) {
+        return orderMenus.stream()
+                .map(this::mapOrderMenuDto)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), OrderDto::new));
+    }
+
+    private OrderMenuDto mapOrderMenuDto(OrderMenu orderMenu) {
+        Menu menu = orderMenu.getMenu();
+        int count = orderMenu.getCount();
+
+        return new OrderMenuDto(menu.getName(), count);
     }
 }

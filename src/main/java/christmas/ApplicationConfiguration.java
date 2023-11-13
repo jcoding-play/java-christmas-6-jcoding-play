@@ -13,16 +13,16 @@ import java.util.List;
 
 public class ApplicationConfiguration {
 
-    public OrderService orderService() {
-        return new OrderService(orderMapper(), orderValidator());
-    }
-
-    private OrderMapper orderMapper() {
+    public OrderMapper orderMapper() {
         return new OrderMapper(menuRepository());
     }
 
     private MenuRepository menuRepository() {
         return new MenuRepository();
+    }
+
+    public OrderService orderService() {
+        return new OrderService(orderValidator());
     }
 
     private OrderValidator orderValidator() {
