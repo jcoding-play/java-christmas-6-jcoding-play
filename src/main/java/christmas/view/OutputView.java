@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
-    private static final String START_MESSAGE = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
 
+    private static final String START_MESSAGE_FORMAT = "안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다." + NEWLINE;
     private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
     private static final String MENU_MESSAGE_FORMAT = "%s %d개";
     private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
@@ -23,8 +23,8 @@ public class OutputView {
     private static final String ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX = "<할인 후 예상 결제 금액>";
     private static final String EVENT_BADGE_MESSAGE_PREFIX = "<12월 이벤트 배지>";
 
-    public void printStartMessage() {
-        System.out.println(START_MESSAGE);
+    public void printStartMessage(int month) {
+        System.out.printf(START_MESSAGE_FORMAT, month);
     }
 
     public void printPreviewBenefitsMessage(int month, int date) {

@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MainController {
+    private static final int MONTH_OF_THE_EVENT = 12;
+
     private final OrderService orderService;
     private final BenefitService benefitService;
     private final InputView inputView;
@@ -34,7 +36,7 @@ public class MainController {
     }
 
     public void run() {
-        outputView.printStartMessage();
+        outputView.printStartMessage(MONTH_OF_THE_EVENT);
         int date = inputView.readDate();
         VisitDate visitDate = new VisitDate(date);
 
