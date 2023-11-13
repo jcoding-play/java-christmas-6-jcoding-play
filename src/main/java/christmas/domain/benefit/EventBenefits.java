@@ -1,7 +1,9 @@
 package christmas.domain.benefit;
 
 import christmas.domain.event.Event;
+import christmas.domain.event.GiftEvent;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class EventBenefits {
@@ -19,26 +21,26 @@ public class EventBenefits {
                 .reduce(INITIAL_BENEFIT_AMOUNT, Integer::sum);
     }
 
-    public int calculateEstimatedPaymentAmount(int totalOrderPrice, int totalBenefitAmount) {
-        int result = subtractBetween(totalOrderPrice, totalBenefitAmount);
+    public int calculateEstimatedPaymentAmount(int totalOrderAmount, int totalBenefitAmount) {
+        int result = subtractBetween(totalOrderAmount, totalBenefitAmount);
 
         if (isGiftEventApplied()) {
-            return result + 25000;
+            return result + benefitDetails.get(new GiftEvent());
         }
         return result;
-    }
-
-    private boolean isGiftEventApplied() {
-        return benefitDetails.keySet()
-                .stream()
-                .anyMatch(Event::isGiftEvent);
     }
 
     private int subtractBetween(int totalOrderPrice, int totalBenefitAmount) {
         return totalOrderPrice - totalBenefitAmount;
     }
 
+    public boolean isGiftEventApplied() {
+        return benefitDetails.keySet()
+                .stream()
+                .anyMatch(Event::isGiftEvent);
+    }
+
     public Map<Event, Integer> getBenefitDetails() {
-        return benefitDetails;
+        return Collections.unmodifiableMap(benefitDetails);
     }
 }
