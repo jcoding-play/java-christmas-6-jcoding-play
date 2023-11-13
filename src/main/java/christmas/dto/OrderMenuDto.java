@@ -1,4 +1,4 @@
-package christmas.service.order.dto;
+package christmas.dto;
 
 public record OrderMenuDto(String name, int count) {
 }

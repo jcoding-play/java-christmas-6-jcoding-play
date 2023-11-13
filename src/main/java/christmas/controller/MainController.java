@@ -9,8 +9,8 @@ import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderService;
-import christmas.service.order.dto.OrderDto;
-import christmas.service.order.dto.OrderMenuDto;
+import christmas.dto.OrderDto;
+import christmas.dto.OrderMenuDto;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 

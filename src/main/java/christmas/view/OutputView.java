@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.service.order.dto.OrderMenuDto;
+import christmas.dto.OrderMenuDto;
 
 import java.util.List;
 import java.util.Map;

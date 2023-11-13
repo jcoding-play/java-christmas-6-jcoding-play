@@ -2,7 +2,7 @@ package christmas.service.order;
 
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderValidator;
-import christmas.service.order.dto.OrderDto;
+import christmas.dto.OrderDto;
 
 public class OrderService {
     private final OrderMapper orderMapper;
