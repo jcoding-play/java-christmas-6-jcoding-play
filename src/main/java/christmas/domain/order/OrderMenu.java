@@ -28,6 +28,14 @@ public class OrderMenu {
         return menu.isDrink();
     }
 
+    public boolean isDessert() {
+        return menu.isDessert();
+    }
+
+    public boolean isMain() {
+        return menu.isMain();
+    }
+
     public int calculateOrderAmount() {
         return menu.calculateOrderAmount(count);
     }
