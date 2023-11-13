@@ -12,9 +12,16 @@ public class OrderValidator {
     private static final int INITIAL_COUNT = 0;
 
     public void validate(List<OrderMenu> orderMenus) {
+        validateEmptyOrder(orderMenus);
         validateDuplicatedMenu(orderMenus);
         validateOrderOnlyDrinks(orderMenus);
         validateTotalOrderCount(orderMenus);
+    }
+
+    private void validateEmptyOrder(List<OrderMenu> orderMenus) {
+        if (orderMenus.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_ORDER_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validateDuplicatedMenu(List<OrderMenu> orderMenus) {

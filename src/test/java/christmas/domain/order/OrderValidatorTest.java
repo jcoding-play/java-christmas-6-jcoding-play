@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,6 +17,14 @@ class OrderValidatorTest {
     @BeforeEach
     void setUp() {
         orderValidator = new OrderValidator();
+    }
+
+    @Test
+    @DisplayName("주문한 메뉴가 없는 경우 예외가 발생한다.")
+    void validateEmptyOrder() {
+        assertThatThrownBy(() -> orderValidator.validate(Collections.emptyList()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 
     @Test
