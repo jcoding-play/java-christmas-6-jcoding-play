@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
+    private static final String NOTHING_MESSAGE = "없음";
 
     private static final String START_MESSAGE_FORMAT = "안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다." + NEWLINE;
     private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
@@ -61,9 +62,16 @@ public class OutputView {
 
     public void printGiftMenu(String giftMenu, int count) {
         String prefixMessage = generatePrefixMessage(GIFT_MENU_MESSAGE_PREFIX);
-        String giftMenuMessage = generateMenuMessage(giftMenu, count);
+        String giftMenuMessage = generateGiftMenuMessage(giftMenu, count);
 
         System.out.println(join(prefixMessage, giftMenuMessage));
+    }
+
+    private String generateGiftMenuMessage(String giftMenu, int count) {
+        if (count == 0) {
+            return NOTHING_MESSAGE;
+        }
+        return generateMenuMessage(giftMenu, count);
     }
 
     public void printBenefitDetails(Map<String, Integer> benefitDetails) {
