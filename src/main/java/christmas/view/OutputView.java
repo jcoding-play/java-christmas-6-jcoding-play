@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
     private static final String START_MESSAGE = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
-    private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
+    private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
     private static final String ORDER_MENU_MESSAGE_PREFIX = "<주문 메뉴>";
     private static final String MENU_MESSAGE_FORMAT = "%s %d개";
     private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
@@ -30,10 +30,15 @@ public class OutputView {
     }
 
     public void printMenu(List<OrderMenuDto> orderMenus) {
-        System.out.println(ORDER_MENU_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(ORDER_MENU_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String orderMenuMessage = generateMenuMessages(orderMenus);
         System.out.println(orderMenuMessage);
+    }
+
+    private String generatePrefixMessage(String prefix) {
+        return NEWLINE + prefix;
     }
 
     private String generateMenuMessages(List<OrderMenuDto> orderMenus) {
@@ -47,7 +52,8 @@ public class OutputView {
     }
 
     public void printTotalOrderAmount(int totalOrderAmount) {
-        System.out.println(TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String totalOrderAmountMessage = generateAmountMessage(totalOrderAmount);
         System.out.println(totalOrderAmountMessage);
@@ -58,14 +64,16 @@ public class OutputView {
     }
 
     public void printGiftMenu(String giftMenu, int count) {
-        System.out.println(GIFT_MENU_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(GIFT_MENU_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String giftMenuMessage = generateMenuMessage(giftMenu, count);
         System.out.println(giftMenuMessage);
     }
 
     public void printBenefitDetails(Map<String, Integer> benefitDetails) {
-        System.out.println(BENEFIT_DETAILS_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(BENEFIT_DETAILS_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String benefitDetailsMessage = generateBenefitDetailsMessages(benefitDetails);
         System.out.println(benefitDetailsMessage);
@@ -84,21 +92,25 @@ public class OutputView {
     }
 
     public void printTotalBenefitAmount(int totalBenefitAmount) {
-        System.out.println(TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String totalBenefitAmountMessage = generateAmountMessage(totalBenefitAmount * -1);
         System.out.println(totalBenefitAmountMessage);
     }
 
     public void printEstimatedPaymentAmount(int estimatedPaymentAmount) {
-        System.out.println(ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
 
         String estimatedPaymentAmountMessage = generateAmountMessage(estimatedPaymentAmount);
         System.out.println(estimatedPaymentAmountMessage);
     }
 
     public void printEventBadge(String name) {
-        System.out.println(EVENT_BADGE_MESSAGE_PREFIX);
+        String prefixMessage = generatePrefixMessage(EVENT_BADGE_MESSAGE_PREFIX);
+        System.out.println(prefixMessage);
+
         System.out.println(name);
     }
 }
