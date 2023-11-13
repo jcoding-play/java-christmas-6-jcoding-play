@@ -1,10 +1,9 @@
 package christmas.controller;
 
 import christmas.domain.VisitDate;
-import christmas.domain.benefit.BenefitDetails;
+import christmas.domain.benefit.EventBenefits;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.Event;
-import christmas.domain.menu.Drink;
 import christmas.domain.menu.Menu;
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
@@ -37,41 +36,80 @@ public class MainController {
 
     public void run() {
         outputView.printStartMessage(MONTH_OF_THE_EVENT);
-        int date = inputView.readDate(MONTH_OF_THE_EVENT);
-        VisitDate visitDate = new VisitDate(MONTH_OF_THE_EVENT, date);
+        
+        VisitDate visitDate = selectVisitDate();
+        Order order = placeOrder();
 
+        checkEventBenefits(order, visitDate);
+    }
+
+    private VisitDate selectVisitDate() {
+        int date = inputView.readDate(MONTH_OF_THE_EVENT);
+        return new VisitDate(MONTH_OF_THE_EVENT, date);
+    }
+
+    private Order placeOrder() {
         String menuAndCounts = inputView.readMenuAndCount();
         OrderDto orderDto = toDto(menuAndCounts);
 
-        Order order = orderService.placeOrder(orderDto);
-
-        showEventBenefits(order, visitDate);
+        return orderService.placeOrder(orderDto);
     }
 
-    private void showEventBenefits(Order order, VisitDate visitDate) {
+    private void checkEventBenefits(Order order, VisitDate visitDate) {
         outputView.printPreviewBenefitsMessage(visitDate.getMonth(), visitDate.getDate());
 
+        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, order);
+        int totalOrderAmount = order.calculateTotalOrderAmount();
+        int totalBenefitAmount = eventBenefits.calculateTotalBenefitAmount();
+
+        showOrderInformation(order, totalOrderAmount);
+        showEventBenefits(eventBenefits, totalOrderAmount, totalBenefitAmount);
+    }
+
+    private void showOrderInformation(Order order, int totalOrderAmount) {
         List<OrderMenuDto> orderMenus = toDto(order.getOrderMenus());
         outputView.printMenu(orderMenus);
 
-        int totalOrderPrice = order.calculateTotalOrderPrice();
-        outputView.printTotalOrderAmount(totalOrderPrice);
+        outputView.printTotalOrderAmount(totalOrderAmount);
+    }
 
-        BenefitDetails benefitDetails = benefitService.checkApplicableBenefitDetails(visitDate, order);
+    private void showEventBenefits(EventBenefits eventBenefits, int totalOrderAmount, int totalBenefitAmount) {
+        showGiftMenu(eventBenefits);
+        showBenefitDetails(eventBenefits);
+        showTotalBenefitAmount(totalBenefitAmount);
+        showEstimatedPaymentAmount(eventBenefits, totalOrderAmount, totalBenefitAmount);
+        showEventBadge(totalBenefitAmount);
+    }
 
-        String giftMenu = Drink.CHAMPAGNE.getName();
-        int count = 1;
-        outputView.printGiftMenu(giftMenu, count);
+    private void showGiftMenu(EventBenefits eventBenefits) {
+        Menu menu = benefitService.getGiftMenu();
+        int count = calculateGiftMenuCount(eventBenefits);
 
-        Map<String, Integer> benefits = toDto(benefitDetails.getBenefitDetails());
-        outputView.printBenefitDetails(benefits);
+        outputView.printGiftMenu(menu.getName(), count);
+    }
 
-        int totalBenefitAmount = benefitDetails.calculateTotalBenefitAmount();
+    private int calculateGiftMenuCount(EventBenefits eventBenefits) {
+        if (eventBenefits.isGiftEventApplied()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private void showBenefitDetails(EventBenefits eventBenefits) {
+        Map<String, Integer> benefitDetails = toDto(eventBenefits.getBenefitDetails());
+        outputView.printBenefitDetails(benefitDetails);
+    }
+
+    private void showTotalBenefitAmount(int totalBenefitAmount) {
         outputView.printTotalBenefitAmount(totalBenefitAmount);
+    }
 
-        int estimatedPaymentAmount = benefitDetails.calculateEstimatedPaymentAmount(totalOrderPrice, totalBenefitAmount);
+    private void showEstimatedPaymentAmount(EventBenefits eventBenefits, int totalOrderAmount, int totalBenefitAmount) {
+        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderAmount, totalBenefitAmount);
         outputView.printEstimatedPaymentAmount(estimatedPaymentAmount);
+    }
 
+    private void showEventBadge(int totalBenefitAmount) {
         EventBadge eventBadge = benefitService.checkEventBadge(totalBenefitAmount);
         outputView.printEventBadge(eventBadge.getName());
     }
