@@ -15,6 +15,7 @@ public class OutputView {
     private static final String MENU_MESSAGE_FORMAT = "%s %d개";
     private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
     private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: -%s";
+    private static final String ERROR_MESSAGE_FORMAT = "[ERROR] %s" + NEWLINE;
 
     private static final String ORDER_MENU_MESSAGE_PREFIX = "<주문 메뉴>";
     private static final String TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX = "<할인 전 총주문 금액>";
@@ -122,5 +123,9 @@ public class OutputView {
 
     private String join(String prefix, String message) {
         return String.join(NEWLINE, prefix, message);
+    }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.printf(ERROR_MESSAGE_FORMAT, errorMessage);
     }
 }
