@@ -82,6 +82,9 @@ public class OutputView {
     }
 
     private String generateBenefitDetailsMessages(Map<String, Integer> benefitDetails) {
+        if (benefitDetails.isEmpty()) {
+            return NOTHING_MESSAGE;
+        }
         return benefitDetails.keySet()
                 .stream()
                 .map(eventName -> generateBenefitDetailsMessage(eventName, benefitDetails.get(eventName)))
