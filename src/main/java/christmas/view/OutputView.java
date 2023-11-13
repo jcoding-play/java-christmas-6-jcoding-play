@@ -3,6 +3,7 @@ package christmas.view;
 import christmas.service.order.dto.OrderMenuDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -14,6 +15,8 @@ public class OutputView {
     private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
     private static final String TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX = "<할인 전 총주문 금액>";
     private static final String GIFT_MENU_MESSAGE_PREFIX = "<증정 메뉴>";
+    private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: -%s";
+    private static final String BENEFIT_DETAILS_MESSAGE_PREFIX = "<혜택 내역>";
 
     public void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -47,8 +50,8 @@ public class OutputView {
         System.out.println(totalOrderAmountMessage);
     }
 
-    private String generateAmountMessage(int totalOrderAmount) {
-        return String.format(AMOUNT_MESSAGE_FORMAT, totalOrderAmount);
+    private String generateAmountMessage(int amount) {
+        return String.format(AMOUNT_MESSAGE_FORMAT, amount);
     }
 
     public void printGiftMenu(String giftMenu, int count) {
@@ -56,5 +59,24 @@ public class OutputView {
 
         String giftMenuMessage = generateMenuMessage(giftMenu, count);
         System.out.println(giftMenuMessage);
+    }
+
+    public void printBenefitDetails(Map<String, Integer> benefitDetails) {
+        System.out.println(BENEFIT_DETAILS_MESSAGE_PREFIX);
+
+        String benefitDetailsMessage = generateBenefitDetailsMessages(benefitDetails);
+        System.out.println(benefitDetailsMessage);
+    }
+
+    private String generateBenefitDetailsMessages(Map<String, Integer> benefitDetails) {
+        return benefitDetails.keySet()
+                .stream()
+                .map(eventName -> generateBenefitDetailsMessage(eventName, benefitDetails.get(eventName)))
+                .collect(Collectors.joining(NEWLINE));
+    }
+
+    private String generateBenefitDetailsMessage(String event, int discountedAmount) {
+        String discountedAmountMessage = generateAmountMessage(discountedAmount);
+        return String.format(BENEFIT_DETAILS_MESSAGE_FORMAT, event, discountedAmountMessage);
     }
 }
