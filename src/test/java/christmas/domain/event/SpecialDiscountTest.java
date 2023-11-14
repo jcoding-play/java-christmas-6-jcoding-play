@@ -41,4 +41,15 @@ class SpecialDiscountTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("방문 날짜와 주문 메뉴를 통해 할인 금액을 계산할 수 있다.")
+    void calculateDiscountedAmount() {
+        VisitDate visitDate = new VisitDate(12, 3);
+        Orders orders = new Orders(List.of(new Order(Main.T_BONE_STREAK, 3)));
+
+        int result = specialDiscount.calculateDiscountedAmount(visitDate, orders);
+
+        assertThat(result).isEqualTo(1000);
+    }
 }
