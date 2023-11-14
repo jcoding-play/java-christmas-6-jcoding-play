@@ -4,6 +4,7 @@ import christmas.utils.Constants;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Orders {
     private final List<Order> orders;
@@ -38,5 +39,18 @@ public class Orders {
 
     public List<Order> getOrders() {
         return Collections.unmodifiableList(orders);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Orders orders1 = (Orders) o;
+        return Objects.equals(orders, orders1.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orders);
     }
 }
