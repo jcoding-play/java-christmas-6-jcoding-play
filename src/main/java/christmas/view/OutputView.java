@@ -10,7 +10,14 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
-    private static final String NOTHING_MESSAGE = "없음";
+
+    private static final String START_MESSAGE_FORMAT = "안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다." + NEWLINE;
+    private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
+    private static final String MENU_MESSAGE_FORMAT = "%s %d개";
+    private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
+    private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: %s";
+    private static final String ERROR_MESSAGE_FORMAT = "[ERROR] %s" + NEWLINE;
+
     private static final String PREFIX_SYMBOL_OF_PREFIX_MESSAGE = "<";
     private static final String SUFFIX_SYMBOL_OF_PREFIX_MESSAGE = ">";
     private static final String ORDER_MENU_MESSAGE = "주문 메뉴";
@@ -20,12 +27,8 @@ public class OutputView {
     private static final String TOTAL_BENEFIT_AMOUNT_MESSAGE = "총혜택 금액";
     private static final String ESTIMATED_PAYMENT_AMOUNT_MESSAGE = "할인 후 예상 결제 금액";
     private static final String EVENT_BADGE_MESSAGE = "12월 이벤트 배지";
-    private static final String START_MESSAGE_FORMAT = "안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다." + NEWLINE;
-    private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
-    private static final String MENU_MESSAGE_FORMAT = "%s %d개";
-    private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
-    private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: %s";
-    private static final String ERROR_MESSAGE_FORMAT = "[ERROR] %s" + NEWLINE;
+
+    private static final String NOTHING_MESSAGE = "없음";
     private static final int NEGATIVE_NUMBER = -1;
 
     public void printStartMessage(int month) {

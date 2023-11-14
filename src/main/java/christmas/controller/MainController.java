@@ -6,6 +6,7 @@ import christmas.domain.benefit.EventBadge;
 import christmas.domain.benefit.EventBenefits;
 import christmas.domain.event.GiftMenu;
 import christmas.domain.order.Orders;
+import christmas.dto.GiftMenuDto;
 import christmas.dto.OrdersDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
@@ -97,11 +98,9 @@ public class MainController {
 
     private void showGiftMenu(EventBenefits eventBenefits) {
         GiftMenu giftMenu = eventBenefits.findGiftMenu();
-        if (giftMenu == null) {
-            outputView.printGiftMenu(null, Constants.NUMBER_OF_GIFT_EVENTS_NOT_APPLIED);
-            return;
-        }
-        outputView.printGiftMenu(giftMenu.getName(), giftMenu.getCount());
+        GiftMenuDto giftMenuDto = GiftMenuDto.from(giftMenu);
+
+        outputView.printGiftMenu(giftMenuDto.name(), giftMenuDto.count());
     }
 
     private void showBenefitDetails(EventBenefits eventBenefits) {
