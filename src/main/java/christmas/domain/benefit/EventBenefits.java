@@ -2,6 +2,8 @@ package christmas.domain.benefit;
 
 import christmas.domain.event.Event;
 import christmas.domain.event.GiftEvent;
+import christmas.domain.menu.Menu;
+import christmas.dto.GiftMenuDto;
 import christmas.utils.Constants;
 
 import java.util.Collections;
@@ -37,6 +39,16 @@ public class EventBenefits {
         return benefitDetails.keySet()
                 .stream()
                 .anyMatch(Event::isGiftEvent);
+    }
+
+    public GiftMenuDto getGiftMenu() {
+        GiftEvent giftEvent = new GiftEvent();
+        Menu giftMenu = giftEvent.getGiftMenu();
+
+        if (isGiftEventApplied()) {
+            return new GiftMenuDto(giftMenu.getName(), Constants.NUMBER_OF_GIFT_EVENTS_APPLIED);
+        }
+        return new GiftMenuDto(giftMenu.getName(), Constants.NUMBER_OF_GIFT_EVENTS_NOT_APPLIED);
     }
 
     public Map<Event, Integer> getBenefitDetails() {

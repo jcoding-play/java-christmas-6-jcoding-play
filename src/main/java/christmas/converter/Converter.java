@@ -1,9 +1,11 @@
 package christmas.converter;
 
+import christmas.domain.event.Event;
 import christmas.dto.OrderDto;
 import christmas.dto.OrderMenuDto;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Converter {
@@ -19,5 +21,13 @@ public class Converter {
     private static OrderMenuDto generateOrderMenuDto(String menuAndCount) {
         String[] input = menuAndCount.split(MENU_AND_COUNT_DELIMITER);
         return new OrderMenuDto(input[0], Integer.parseInt(input[1]));
+    }
+
+    public static Map<String, Integer> toString(Map<Event, Integer> benefitDetails) {
+        return benefitDetails.keySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Event::getName,
+                        benefitDetails::get));
     }
 }

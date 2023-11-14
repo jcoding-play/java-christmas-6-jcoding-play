@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.dto.OrderMenuDto;
+import christmas.utils.Constants;
 
 import java.util.List;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class OutputView {
     }
 
     private String generateGiftMenuMessage(String giftMenu, int count) {
-        if (count == 0) {
+        if (count == Constants.NUMBER_OF_GIFT_EVENTS_NOT_APPLIED) {
             return NOTHING_MESSAGE;
         }
         return generateMenuMessage(giftMenu, count);

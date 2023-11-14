@@ -2,21 +2,19 @@ package christmas.controller;
 
 import christmas.converter.Converter;
 import christmas.domain.VisitDate;
-import christmas.domain.benefit.EventBenefits;
 import christmas.domain.benefit.EventBadge;
-import christmas.domain.event.Event;
-import christmas.domain.menu.Menu;
+import christmas.domain.benefit.EventBenefits;
 import christmas.domain.order.Order;
+import christmas.dto.GiftMenuDto;
+import christmas.dto.OrderDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
-import christmas.dto.OrderDto;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class MainController {
     private static final int MONTH_OF_THE_EVENT = 12;
@@ -47,7 +45,7 @@ public class MainController {
 
     public void run() {
         outputView.printStartMessage(MONTH_OF_THE_EVENT);
-        
+
         VisitDate visitDate = repeatTemplate(this::selectVisitDate);
         Order order = repeatTemplate(this::placeOrder);
 
@@ -93,21 +91,12 @@ public class MainController {
     }
 
     private void showGiftMenu(EventBenefits eventBenefits) {
-        Menu menu = benefitService.getGiftMenu();
-        int count = calculateGiftMenuCount(eventBenefits);
-
-        outputView.printGiftMenu(menu.getName(), count);
-    }
-
-    private int calculateGiftMenuCount(EventBenefits eventBenefits) {
-        if (eventBenefits.isGiftEventApplied()) {
-            return 1;
-        }
-        return 0;
+        GiftMenuDto giftMenu = eventBenefits.getGiftMenu();
+        outputView.printGiftMenu(giftMenu.name(), giftMenu.count());
     }
 
     private void showBenefitDetails(EventBenefits eventBenefits) {
-        Map<String, Integer> benefitDetails = toDto(eventBenefits.getBenefitDetails());
+        Map<String, Integer> benefitDetails = Converter.toString(eventBenefits.getBenefitDetails());
         outputView.printBenefitDetails(benefitDetails);
     }
 
@@ -123,13 +112,5 @@ public class MainController {
     private void showEventBadge(int totalBenefitAmount) {
         EventBadge eventBadge = benefitService.checkEventBadge(totalBenefitAmount);
         outputView.printEventBadge(eventBadge.getName());
-    }
-
-    private Map<String, Integer> toDto(Map<Event, Integer> benefitDetails) {
-        return benefitDetails.keySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Event::getName,
-                        benefitDetails::get));
     }
 }
