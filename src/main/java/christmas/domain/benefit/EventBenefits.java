@@ -22,17 +22,25 @@ public class EventBenefits {
                 .reduce(Constants.INITIAL_AMOUNT, Integer::sum);
     }
 
-    public int calculateEstimatedPaymentAmount(int totalOrderAmount, int totalBenefitAmount) {
-        int result = subtractBetween(totalOrderAmount, totalBenefitAmount);
+    public int calculateEstimatedPaymentAmount(int totalOrderAmount) {
+        int totalDiscountedAmount = calculateTotalDiscountedAmount();
 
-        return result + benefitDetails.getOrDefault(new GiftEvent(), Constants.INITIAL_AMOUNT);
+        return totalOrderAmount - totalDiscountedAmount;
     }
 
-    private int subtractBetween(int totalOrderPrice, int totalBenefitAmount) {
-        return totalOrderPrice - totalBenefitAmount;
+    private int calculateTotalDiscountedAmount() {
+        return benefitDetails.keySet()
+                .stream()
+                .filter(this::isNotGiftEvent)
+                .map(benefitDetails::get)
+                .reduce(Constants.INITIAL_AMOUNT, Integer::sum);
     }
 
-    public GiftMenuDto getGiftMenu() {
+    private boolean isNotGiftEvent(Event event) {
+        return !event.isGiftEvent();
+    }
+
+    public GiftMenuDto findGiftMenu() {
         GiftEvent giftEvent = new GiftEvent();
         Menu giftMenu = giftEvent.getGiftMenu();
 

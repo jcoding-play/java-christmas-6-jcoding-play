@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-class BenefitDetailsTest {
+class EventBenefitsTest {
 
     @Test
     @DisplayName("총혜택 금액을 알 수 있다.")
@@ -30,8 +30,7 @@ class BenefitDetailsTest {
         EventBenefits eventBenefits = new EventBenefits(result);
 
         int totalOrderPrice = 142000;
-        int totalBenefitAmount = 31246;
-        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderPrice, totalBenefitAmount);
+        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderPrice);
 
         assertThat(estimatedPaymentAmount).isEqualTo(135754);
     }

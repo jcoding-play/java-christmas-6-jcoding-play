@@ -86,12 +86,12 @@ public class MainController {
         showGiftMenu(eventBenefits);
         showBenefitDetails(eventBenefits);
         showTotalBenefitAmount(totalBenefitAmount);
-        showEstimatedPaymentAmount(eventBenefits, totalOrderAmount, totalBenefitAmount);
+        showEstimatedPaymentAmount(eventBenefits, totalOrderAmount);
         showEventBadge(totalBenefitAmount);
     }
 
     private void showGiftMenu(EventBenefits eventBenefits) {
-        GiftMenuDto giftMenu = eventBenefits.getGiftMenu();
+        GiftMenuDto giftMenu = eventBenefits.findGiftMenu();
         outputView.printGiftMenu(giftMenu.name(), giftMenu.count());
     }
 
@@ -104,8 +104,8 @@ public class MainController {
         outputView.printTotalBenefitAmount(totalBenefitAmount);
     }
 
-    private void showEstimatedPaymentAmount(EventBenefits eventBenefits, int totalOrderAmount, int totalBenefitAmount) {
-        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderAmount, totalBenefitAmount);
+    private void showEstimatedPaymentAmount(EventBenefits eventBenefits, int totalOrderAmount) {
+        int estimatedPaymentAmount = eventBenefits.calculateEstimatedPaymentAmount(totalOrderAmount);
         outputView.printEstimatedPaymentAmount(estimatedPaymentAmount);
     }
 
