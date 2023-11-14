@@ -1,8 +1,6 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.menu.Drink;
-import christmas.domain.menu.Menu;
 import christmas.domain.order.Orders;
 
 import java.util.List;
@@ -15,10 +13,10 @@ public class GiftEvent extends AbstractEvent {
     private static final int LAST_DAY_OF_THE_EVENT = 31;
     private static final int MINIMUM_APPLICABLE_ORDER_PRICE = 120000;
 
-    private final Menu giftMenu;
+    private final GiftMenu giftMenu;
 
-    public GiftEvent() {
-        this.giftMenu = Drink.CHAMPAGNE;
+    public GiftEvent(GiftMenu giftMenu) {
+        this.giftMenu = giftMenu;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class GiftEvent extends AbstractEvent {
 
     @Override
     public int calculateDiscountedAmount(VisitDate visitDate, Orders orders) {
-        return giftMenu.getPrice();
+        return giftMenu.calculateTotalPrice();
     }
 
     @Override
@@ -49,7 +47,7 @@ public class GiftEvent extends AbstractEvent {
         return EVENT_NAME;
     }
 
-    public Menu getGiftMenu() {
+    public GiftMenu getGiftMenu() {
         return giftMenu;
     }
 }

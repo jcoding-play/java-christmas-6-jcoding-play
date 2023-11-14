@@ -1,5 +1,6 @@
 package christmas.domain.event;
 
+import christmas.domain.menu.Drink;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ class GiftEventTest {
     @Test
     @DisplayName("할인 적용 가능한 날짜를 알 수 있다.")
     void findApplicableDates() {
-        GiftEvent giftEvent = new GiftEvent();
+        GiftEvent giftEvent = new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1));
 
         assertThat(giftEvent).extracting("applicableDates", InstanceOfAssertFactories.list(Integer.class))
                 .containsExactly(

@@ -26,7 +26,7 @@ class BenefitServiceTest {
     void setUp() {
         List<Event> events = List.of(new ChristmasDDayDiscount(),
                 new WeekDayDiscount(), new WeekEndDiscount(),
-                new SpecialDiscount(), new GiftEvent());
+                new SpecialDiscount(), new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)));
         benefitService = new BenefitService(new Events(events));
     }
     

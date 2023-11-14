@@ -4,12 +4,13 @@ import christmas.converter.Converter;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.benefit.EventBenefits;
+import christmas.domain.event.GiftMenu;
 import christmas.domain.order.Orders;
-import christmas.dto.GiftMenuDto;
 import christmas.dto.OrdersDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
+import christmas.utils.Constants;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -91,8 +92,12 @@ public class MainController {
     }
 
     private void showGiftMenu(EventBenefits eventBenefits) {
-        GiftMenuDto giftMenu = eventBenefits.findGiftMenu();
-        outputView.printGiftMenu(giftMenu.name(), giftMenu.count());
+        GiftMenu giftMenu = eventBenefits.findGiftMenu();
+        if (giftMenu == null) {
+            outputView.printGiftMenu(null, Constants.NUMBER_OF_GIFT_EVENTS_NOT_APPLIED);
+            return;
+        }
+        outputView.printGiftMenu(giftMenu.getName(), giftMenu.getCount());
     }
 
     private void showBenefitDetails(EventBenefits eventBenefits) {

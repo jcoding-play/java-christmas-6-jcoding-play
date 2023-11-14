@@ -1,10 +1,10 @@
 package christmas.domain.order;
 
+import christmas.utils.Constants;
+
 import java.util.Objects;
 
 public class Count {
-    private static final int MINIMUM_ORDER_COUNT = 1;
-
     private final int count;
 
     public Count(int count) {
@@ -19,7 +19,7 @@ public class Count {
     }
 
     private boolean isLessThanMinimumOrderCount(int count) {
-        return count < MINIMUM_ORDER_COUNT;
+        return count < Constants.MINIMUM_COUNT;
     }
 
     public int multiplyPrice(int price) {

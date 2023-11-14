@@ -1,6 +1,7 @@
 package christmas.domain.benefit;
 
 import christmas.domain.event.*;
+import christmas.domain.menu.Drink;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,9 @@ class EventBenefitsTest {
     @Test
     @DisplayName("총혜택 금액을 알 수 있다.")
     void calculateTotalBenefitAmount() {
-        Map<Event, Integer> result = Map.of(new GiftEvent(), 25000, new ChristmasDDayDiscount(), 3400);
+        Map<Event, Integer> result = Map.of(
+                new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)), 25000,
+                new ChristmasDDayDiscount(), 3400);
         EventBenefits eventBenefits = new EventBenefits(result);
 
         int totalBenefitAmount = eventBenefits.calculateTotalBenefitAmount();
@@ -26,7 +29,7 @@ class EventBenefitsTest {
     void calculateEstimatedPaymentAmount() {
         Map<Event, Integer> result = Map.of(
                 new ChristmasDDayDiscount(), 1200, new WeekDayDiscount(), 4046,
-                new SpecialDiscount(), 1000, new GiftEvent(), 25000);
+                new SpecialDiscount(), 1000, new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)), 25000);
         EventBenefits eventBenefits = new EventBenefits(result);
 
         int totalOrderPrice = 142000;

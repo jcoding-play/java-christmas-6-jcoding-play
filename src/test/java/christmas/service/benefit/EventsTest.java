@@ -3,6 +3,7 @@ package christmas.service.benefit;
 import christmas.domain.VisitDate;
 import christmas.domain.event.*;
 import christmas.domain.menu.Dessert;
+import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
 import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
@@ -24,7 +25,7 @@ class EventsTest {
     void setUp() {
         List<Event> eventList = List.of(new ChristmasDDayDiscount(),
                 new WeekDayDiscount(), new WeekEndDiscount(),
-                new SpecialDiscount(), new GiftEvent());
+                new SpecialDiscount(), new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)));
         events = new Events(eventList);
     }
 
@@ -56,7 +57,8 @@ class EventsTest {
         List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), orders);
 
         assertThat(result).containsExactly(
-                new ChristmasDDayDiscount(), new WeekDayDiscount(), new SpecialDiscount(), new GiftEvent());
+                new ChristmasDDayDiscount(), new WeekDayDiscount(),
+                new SpecialDiscount(), new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)));
     }
 
     @ParameterizedTest
@@ -77,7 +79,7 @@ class EventsTest {
                 List.of(new Order(Main.T_BONE_STREAK, 3), new Order(Dessert.CHOCOLATE_CAKE, 1)));
         List<Event> result = events.findApplicableEvents(new VisitDate(12, 26), orders);
 
-        assertThat(result).containsExactly(new WeekDayDiscount(), new GiftEvent());
+        assertThat(result).containsExactly(new WeekDayDiscount(), new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)));
     }
 
     @Test

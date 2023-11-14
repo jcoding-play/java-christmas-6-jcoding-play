@@ -1,12 +1,14 @@
 package christmas;
 
 import christmas.domain.event.*;
+import christmas.domain.menu.Drink;
 import christmas.domain.order.OrderValidator;
 import christmas.domain.menu.MenuRepository;
 import christmas.service.benefit.BenefitService;
 import christmas.service.benefit.Events;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
+import christmas.utils.Constants;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -44,8 +46,12 @@ public class ApplicationConfiguration {
                 new WeekDayDiscount(),
                 new WeekEndDiscount(),
                 new SpecialDiscount(),
-                new GiftEvent()
+                new GiftEvent(giftMenu())
         );
+    }
+
+    private GiftMenu giftMenu() {
+        return new GiftMenu(Drink.CHAMPAGNE, Constants.MINIMUM_COUNT);
     }
 
     public InputView inputView() {
