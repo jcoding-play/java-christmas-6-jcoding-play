@@ -30,7 +30,7 @@ public class Events {
         return calculateEachDiscountedAmountOf(applicableEvents, visitDate, orders);
     }
 
-    protected List<Event> findApplicableEvents(VisitDate visitDate, Orders orders) {
+    private List<Event> findApplicableEvents(VisitDate visitDate, Orders orders) {
         return events.stream()
                 .filter(event -> event.isApplicable(visitDate, orders))
                 .toList();
