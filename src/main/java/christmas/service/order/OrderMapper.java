@@ -5,7 +5,7 @@ import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
 import christmas.dto.OrderDto;
 import christmas.dto.OrderMenuDto;
-import christmas.repository.MenuRepository;
+import christmas.domain.menu.MenuRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

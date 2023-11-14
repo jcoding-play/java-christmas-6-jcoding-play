@@ -7,7 +7,7 @@ import christmas.domain.order.OrderMenu;
 import christmas.domain.order.OrderValidator;
 import christmas.dto.OrderDto;
 import christmas.dto.OrderMenuDto;
-import christmas.repository.MenuRepository;
+import christmas.domain.menu.MenuRepository;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

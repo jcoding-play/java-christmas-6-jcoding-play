@@ -1,4 +1,4 @@
-package christmas.repository;
+package christmas.domain.menu;
 
 import christmas.domain.menu.*;
 import org.junit.jupiter.api.DisplayName;

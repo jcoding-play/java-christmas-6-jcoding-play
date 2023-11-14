@@ -1,6 +1,4 @@
-package christmas.repository;
-
-import christmas.domain.menu.*;
+package christmas.domain.menu;
 
 import java.util.HashMap;
 import java.util.Map;
