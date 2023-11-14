@@ -23,4 +23,13 @@ class OrderTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
+
+    @Test
+    @DisplayName("주문 가격을 계산할 수 있다.")
+    void calculateOrderAmount() {
+        Order order = new Order(Main.T_BONE_STREAK, 2);
+        int result = order.calculateOrderAmount();
+
+        assertThat(result).isEqualTo(110000);
+    }
 }
