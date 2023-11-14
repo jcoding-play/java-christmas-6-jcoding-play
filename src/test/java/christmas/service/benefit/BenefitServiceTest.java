@@ -1,13 +1,13 @@
 package christmas.service.benefit;
 
-import christmas.domain.benefit.EventBenefits;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
+import christmas.domain.benefit.EventBenefits;
 import christmas.domain.event.*;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
-import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 class BenefitServiceTest {
     private BenefitService benefitService;
@@ -29,7 +30,7 @@ class BenefitServiceTest {
                 new SpecialDiscount(), new GiftEvent(new GiftMenu(Drink.CHAMPAGNE, 1)));
         benefitService = new BenefitService(new Events(events));
     }
-    
+
     @Test
     @DisplayName("고객에게 적용 가능한 총혜택 내역을 확인할 수 있다.")
     void checkApplicableBenefitDetails() {

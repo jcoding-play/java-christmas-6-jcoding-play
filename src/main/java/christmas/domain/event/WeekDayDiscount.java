@@ -32,8 +32,7 @@ public class WeekDayDiscount extends AbstractEvent {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        return super.isApplicable(visitDate, orders) &&
-                orders.countNumberOfDessert() > NOTHING_COUNT;
+        return super.isApplicable(visitDate, orders) && orders.countNumberOfDessert() > NOTHING_COUNT;
     }
 
     @Override

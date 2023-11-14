@@ -5,8 +5,8 @@ import christmas.domain.event.*;
 import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
-import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class EventsTest {
     private Events events;
@@ -35,7 +35,6 @@ class EventsTest {
         assertThat(events).extracting("events", InstanceOfAssertFactories.list(Event.class))
                 .hasSize(5);
     }
-
 
 
     @Test
