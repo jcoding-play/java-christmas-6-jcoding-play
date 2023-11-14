@@ -66,14 +66,18 @@ public class MainController {
     }
 
     private void checkEventBenefits(Orders orders, VisitDate visitDate) {
-        outputView.printPreviewBenefitsMessage(visitDate.getMonth(), visitDate.getDate());
-
-        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, orders);
+        EventBenefits eventBenefits = checkApplicableEventBenefits(orders, visitDate);
         int totalOrderAmount = orders.calculateTotalOrderAmount();
         int totalBenefitAmount = eventBenefits.calculateTotalBenefitAmount();
 
         showOrderInformation(orders, totalOrderAmount);
         showEventBenefits(eventBenefits, totalOrderAmount, totalBenefitAmount);
+    }
+
+    private EventBenefits checkApplicableEventBenefits(Orders orders, VisitDate visitDate) {
+        outputView.printPreviewBenefitsMessage(visitDate.getMonth(), visitDate.getDate());
+
+        return benefitService.checkApplicableEventBenefits(visitDate, orders);
     }
 
     private void showOrderInformation(Orders orders, int totalOrderAmount) {
