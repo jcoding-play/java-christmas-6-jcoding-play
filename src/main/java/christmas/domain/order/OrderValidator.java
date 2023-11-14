@@ -12,45 +12,45 @@ public class OrderValidator {
 
     private static final int MAXIMUM_ORDER_COUNT = 20;
 
-    public void validate(List<OrderMenu> orderMenus) {
-        validateEmptyOrder(orderMenus);
-        validateDuplicatedMenu(orderMenus);
-        validateOrderOnlyDrinks(orderMenus);
-        validateTotalOrderCount(orderMenus);
+    public void validate(List<Order> orders) {
+        validateEmptyOrder(orders);
+        validateDuplicatedMenu(orders);
+        validateOrderOnlyDrinks(orders);
+        validateTotalOrderCount(orders);
     }
 
-    private void validateEmptyOrder(List<OrderMenu> orderMenus) {
-        if (orderMenus.isEmpty()) {
+    private void validateEmptyOrder(List<Order> orders) {
+        if (orders.isEmpty()) {
             throw new IllegalArgumentException(INVALID_ORDER_EXCEPTION_MESSAGE);
         }
     }
 
-    private void validateDuplicatedMenu(List<OrderMenu> orderMenus) {
-        if (hasDuplicatedMenu(orderMenus)) {
+    private void validateDuplicatedMenu(List<Order> orders) {
+        if (hasDuplicatedMenu(orders)) {
             throw new IllegalArgumentException(INVALID_ORDER_EXCEPTION_MESSAGE);
         }
     }
 
-    private boolean hasDuplicatedMenu(List<OrderMenu> orderMenus) {
-        return orderMenus.stream()
-                .map(OrderMenu::getMenu)
+    private boolean hasDuplicatedMenu(List<Order> orders) {
+        return orders.stream()
+                .map(Order::getMenu)
                 .distinct()
-                .count() != orderMenus.size();
+                .count() != orders.size();
     }
 
-    private void validateOrderOnlyDrinks(List<OrderMenu> orderMenus) {
-        if (hasOrderedOnlyDrinks(orderMenus)) {
+    private void validateOrderOnlyDrinks(List<Order> orders) {
+        if (hasOrderedOnlyDrinks(orders)) {
             throw new IllegalArgumentException(ORDER_ONLY_DRINKS_EXCEPTION_MESSAGE);
         }
     }
 
-    private boolean hasOrderedOnlyDrinks(List<OrderMenu> orderMenus) {
-        return orderMenus.stream()
-                .allMatch(OrderMenu::isDrink);
+    private boolean hasOrderedOnlyDrinks(List<Order> orders) {
+        return orders.stream()
+                .allMatch(Order::isDrink);
     }
 
-    private void validateTotalOrderCount(List<OrderMenu> orderMenus) {
-        int totalOrderCount = calculateTotalOrderCount(orderMenus);
+    private void validateTotalOrderCount(List<Order> orders) {
+        int totalOrderCount = calculateTotalOrderCount(orders);
 
         if (isLargerThanMaximumOrderCount(totalOrderCount)) {
             throw new IllegalArgumentException(
@@ -58,9 +58,9 @@ public class OrderValidator {
         }
     }
 
-    private int calculateTotalOrderCount(List<OrderMenu> orderMenus) {
-        return orderMenus.stream()
-                .map(OrderMenu::getCount)
+    private int calculateTotalOrderCount(List<Order> orders) {
+        return orders.stream()
+                .map(Order::getCount)
                 .reduce(Constants.INITIAL_COUNT, Integer::sum);
     }
 

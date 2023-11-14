@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public abstract class AbstractEvent implements Event {
     abstract List<Integer> initializeApplicableDates();
 
     @Override
-    public boolean isApplicable(VisitDate visitDate, Order order) {
+    public boolean isApplicable(VisitDate visitDate, Orders orders) {
         return visitDate.isIncludedIn(applicableDates);
     }
 

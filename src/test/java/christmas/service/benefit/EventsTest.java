@@ -4,8 +4,8 @@ import christmas.domain.VisitDate;
 import christmas.domain.event.*;
 import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Main;
+import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
-import christmas.domain.order.OrderMenu;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,9 +40,9 @@ class EventsTest {
     @Test
     @DisplayName("총 주문 금액이 12만원 미만이면 증정 이벤트는 포함되지 않는다.")
     void findApplicableEvents_V1() {
-        Order order = new Order(
-                List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), order);
+        Orders orders = new Orders(
+                List.of(new Order(Main.T_BONE_STREAK, 1), new Order(Dessert.CHOCOLATE_CAKE, 1)));
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), orders);
 
         assertThat(result).containsExactly(
                 new ChristmasDDayDiscount(), new WeekDayDiscount(), new SpecialDiscount());
@@ -51,9 +51,9 @@ class EventsTest {
     @Test
     @DisplayName("총 주문 금액이 12만원 이상이면 증정 이벤트는 포함된다.")
     void findApplicableEvents_V2() {
-        Order order = new Order(
-                List.of(new OrderMenu(Main.T_BONE_STREAK, 3), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), order);
+        Orders orders = new Orders(
+                List.of(new Order(Main.T_BONE_STREAK, 3), new Order(Dessert.CHOCOLATE_CAKE, 1)));
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 25), orders);
 
         assertThat(result).containsExactly(
                 new ChristmasDDayDiscount(), new WeekDayDiscount(), new SpecialDiscount(), new GiftEvent());
@@ -63,9 +63,9 @@ class EventsTest {
     @ValueSource(ints = {1, 2})
     @DisplayName("방문하는 날짜가 금요일 또는 토요일이라면 주말 할인이 적용된다.")
     void findApplicableEvents_V3(int date) {
-        Order order = new Order(
-                List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, date), order);
+        Orders orders = new Orders(
+                List.of(new Order(Main.T_BONE_STREAK, 1), new Order(Dessert.CHOCOLATE_CAKE, 1)));
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, date), orders);
 
         assertThat(result).containsExactly(new ChristmasDDayDiscount(), new WeekEndDiscount());
     }
@@ -73,9 +73,9 @@ class EventsTest {
     @Test
     @DisplayName("26일 이후부터는 크리스마스 디데이 할인이 적용되지 않는다.")
     void findApplicableEvents_V4() {
-        Order order = new Order(
-                List.of(new OrderMenu(Main.T_BONE_STREAK, 3), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, 26), order);
+        Orders orders = new Orders(
+                List.of(new Order(Main.T_BONE_STREAK, 3), new Order(Dessert.CHOCOLATE_CAKE, 1)));
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 26), orders);
 
         assertThat(result).containsExactly(new WeekDayDiscount(), new GiftEvent());
     }
@@ -83,9 +83,9 @@ class EventsTest {
     @Test
     @DisplayName("이벤트 달력에 별이 있으면 특별 할인이 적용된다.")
     void findApplicableEvents_V5() {
-        Order order = new Order(
-                List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Dessert.CHOCOLATE_CAKE, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, 31), order);
+        Orders orders = new Orders(
+                List.of(new Order(Main.T_BONE_STREAK, 1), new Order(Dessert.CHOCOLATE_CAKE, 1)));
+        List<Event> result = events.findApplicableEvents(new VisitDate(12, 31), orders);
 
         assertThat(result).containsExactly(new WeekDayDiscount(), new SpecialDiscount());
     }

@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class SpecialDiscount extends AbstractEvent {
     }
 
     @Override
-    public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
+    public int calculateDiscountedAmount(VisitDate visitDate, Orders order) {
         return SPECIAL_DISCOUNT_AMOUNT;
     }
 

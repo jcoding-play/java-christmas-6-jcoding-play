@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.dto.OrderMenuDto;
+import christmas.dto.OrderDto;
 import christmas.utils.Constants;
 
 import java.util.List;
@@ -36,12 +36,12 @@ public class OutputView {
         System.out.printf(PREVIEW_BENEFITS_MESSAGE_FORMAT, month, date);
     }
 
-    public void printMenu(List<OrderMenuDto> orderMenus) {
-        printTemplate(ORDER_MENU_MESSAGE, () -> generateMenuMessages(orderMenus));
+    public void printMenu(List<OrderDto> orders) {
+        printTemplate(ORDER_MENU_MESSAGE, () -> generateMenuMessages(orders));
     }
 
-    private String generateMenuMessages(List<OrderMenuDto> orderMenus) {
-        return orderMenus.stream()
+    private String generateMenuMessages(List<OrderDto> orders) {
+        return orders.stream()
                 .map(orderMenu -> generateMenuMessage(orderMenu.name(), orderMenu.count()))
                 .collect(Collectors.joining(NEWLINE));
     }

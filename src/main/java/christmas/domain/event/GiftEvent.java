@@ -3,7 +3,7 @@ package christmas.domain.event;
 import christmas.domain.VisitDate;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Menu;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -34,13 +34,13 @@ public class GiftEvent extends AbstractEvent {
     }
 
     @Override
-    public boolean isApplicable(VisitDate visitDate, Order order) {
-        return super.isApplicable(visitDate, order) &&
-                order.calculateTotalOrderAmount() >= MINIMUM_APPLICABLE_ORDER_PRICE;
+    public boolean isApplicable(VisitDate visitDate, Orders orders) {
+        return super.isApplicable(visitDate, orders) &&
+                orders.calculateTotalOrderAmount() >= MINIMUM_APPLICABLE_ORDER_PRICE;
     }
 
     @Override
-    public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
+    public int calculateDiscountedAmount(VisitDate visitDate, Orders orders) {
         return giftMenu.getPrice();
     }
 

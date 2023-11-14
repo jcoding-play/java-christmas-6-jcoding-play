@@ -1,8 +1,8 @@
 package christmas.service.order;
 
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import christmas.domain.order.OrderValidator;
-import christmas.dto.OrderDto;
+import christmas.dto.OrdersDto;
 
 public class OrderService {
     private final OrderValidator orderValidator;
@@ -11,10 +11,10 @@ public class OrderService {
         this.orderValidator = orderValidator;
     }
 
-    public Order placeOrder(OrderMapper orderMapper, OrderDto orderDto) {
-        Order order = orderMapper.toEntity(orderDto);
-        order.validate(orderValidator);
+    public Orders placeOrder(OrderMapper orderMapper, OrdersDto ordersDto) {
+        Orders orders = orderMapper.toEntity(ordersDto);
+        orders.validate(orderValidator);
 
-        return order;
+        return orders;
     }
 }

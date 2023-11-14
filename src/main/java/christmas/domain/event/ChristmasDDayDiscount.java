@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -22,7 +22,7 @@ public class ChristmasDDayDiscount extends AbstractEvent {
     }
 
     @Override
-    public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
+    public int calculateDiscountedAmount(VisitDate visitDate, Orders orders) {
         int difference = visitDate.calculateDifferenceInDate(FIRST_DAY_OF_THE_EVENT);
         int additionalDiscountAmount = difference * DISCOUNTED_AMOUNT_ADDED_PER_DAY;
 

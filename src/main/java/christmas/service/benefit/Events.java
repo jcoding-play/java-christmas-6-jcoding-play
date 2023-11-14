@@ -2,7 +2,7 @@ package christmas.service.benefit;
 
 import christmas.domain.VisitDate;
 import christmas.domain.event.Event;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,28 +18,28 @@ public class Events {
         this.events = events;
     }
 
-    public Map<Event, Integer> checkApplicableBenefitDetails(VisitDate visitDate, Order order) {
-        if (order.calculateTotalOrderAmount() < MINIMUM_APPLICABLE_TOTAL_ORDER_AMOUNT) {
+    public Map<Event, Integer> checkApplicableBenefitDetails(VisitDate visitDate, Orders orders) {
+        if (orders.calculateTotalOrderAmount() < MINIMUM_APPLICABLE_TOTAL_ORDER_AMOUNT) {
             return Collections.emptyMap();
         }
-        return checkEvents(visitDate, order);
+        return checkEvents(visitDate, orders);
     }
 
-    private Map<Event, Integer> checkEvents(VisitDate visitDate, Order order) {
-        List<Event> applicableEvents = findApplicableEvents(visitDate, order);
-        return calculateEachDiscountedAmountOf(applicableEvents, visitDate, order);
+    private Map<Event, Integer> checkEvents(VisitDate visitDate, Orders orders) {
+        List<Event> applicableEvents = findApplicableEvents(visitDate, orders);
+        return calculateEachDiscountedAmountOf(applicableEvents, visitDate, orders);
     }
 
-    protected List<Event> findApplicableEvents(VisitDate visitDate, Order order) {
+    protected List<Event> findApplicableEvents(VisitDate visitDate, Orders orders) {
         return events.stream()
-                .filter(event -> event.isApplicable(visitDate, order))
+                .filter(event -> event.isApplicable(visitDate, orders))
                 .toList();
     }
 
-    private Map<Event, Integer> calculateEachDiscountedAmountOf(List<Event> applicableEvents, VisitDate visitDate, Order order) {
+    private Map<Event, Integer> calculateEachDiscountedAmountOf(List<Event> applicableEvents, VisitDate visitDate, Orders orders) {
         return applicableEvents.stream()
                 .collect(Collectors.toMap(
                         event -> event,
-                        event -> event.calculateDiscountedAmount(visitDate, order)));
+                        event -> event.calculateDiscountedAmount(visitDate, orders)));
     }
 }

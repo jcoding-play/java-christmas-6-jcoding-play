@@ -2,11 +2,11 @@ package christmas.service.order;
 
 import christmas.domain.menu.Appetizer;
 import christmas.domain.menu.Drink;
+import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
-import christmas.domain.order.OrderMenu;
 import christmas.domain.order.OrderValidator;
+import christmas.dto.OrdersDto;
 import christmas.dto.OrderDto;
-import christmas.dto.OrderMenuDto;
 import christmas.domain.menu.MenuRepository;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,21 +32,21 @@ class OrderServiceTest {
     @Test
     @DisplayName("주문을 할 수 있다.")
     void placeOrder() {
-        List<OrderMenuDto> orderMenus = List.of(new OrderMenuDto("타파스", 1), new OrderMenuDto("제로콜라", 1));
-        OrderDto orderDto = new OrderDto(orderMenus);
+        List<OrderDto> orders = List.of(new OrderDto("타파스", 1), new OrderDto("제로콜라", 1));
+        OrdersDto ordersDto = new OrdersDto(orders);
 
-        Order order = orderService.placeOrder(orderMapper, orderDto);
+        Orders order = orderService.placeOrder(orderMapper, ordersDto);
 
-        assertThat(order).extracting("orderMenus", InstanceOfAssertFactories.list(OrderMenu.class))
-                .containsExactly(new OrderMenu(Appetizer.TAPAS, 1), new OrderMenu(Drink.ZERO_COLA, 1));
+        assertThat(order).extracting("orders", InstanceOfAssertFactories.list(Order.class))
+                .containsExactly(new Order(Appetizer.TAPAS, 1), new Order(Drink.ZERO_COLA, 1));
     }
 
     @Test
     @DisplayName("메뉴판에 없는 메뉴가 입력된 경우 예외가 발생한다.")
     void invalidPlaceOrder() {
-        OrderDto orderDto = new OrderDto(List.of(new OrderMenuDto("먹다남은짬뽕밥", 3)));
+        OrdersDto ordersDto = new OrdersDto(List.of(new OrderDto("먹다남은짬뽕밥", 3)));
 
-        assertThatThrownBy(() -> orderService.placeOrder(orderMapper, orderDto))
+        assertThatThrownBy(() -> orderService.placeOrder(orderMapper, ordersDto))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }

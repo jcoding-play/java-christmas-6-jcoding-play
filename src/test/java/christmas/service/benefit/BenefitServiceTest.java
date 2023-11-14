@@ -6,8 +6,8 @@ import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.*;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Main;
+import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
-import christmas.domain.order.OrderMenu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,9 +34,9 @@ class BenefitServiceTest {
     @DisplayName("고객에게 적용 가능한 총혜택 내역을 확인할 수 있다.")
     void checkApplicableBenefitDetails() {
         VisitDate visitDate = new VisitDate(12, 25);
-        Order order = new Order(List.of(new OrderMenu(Main.T_BONE_STREAK, 1), new OrderMenu(Drink.ZERO_COLA, 3)));
+        Orders orders = new Orders(List.of(new Order(Main.T_BONE_STREAK, 1), new Order(Drink.ZERO_COLA, 3)));
 
-        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, order);
+        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, orders);
         Map<Event, Integer> result = eventBenefits.getBenefitDetails();
 
         assertThat(result.size()).isEqualTo(2);

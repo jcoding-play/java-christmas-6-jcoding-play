@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,14 +31,14 @@ public class WeekDayDiscount extends AbstractEvent {
     }
 
     @Override
-    public boolean isApplicable(VisitDate visitDate, Order order) {
-        return super.isApplicable(visitDate, order) &&
-                order.countNumberOfDessert() > NOTHING_COUNT;
+    public boolean isApplicable(VisitDate visitDate, Orders orders) {
+        return super.isApplicable(visitDate, orders) &&
+                orders.countNumberOfDessert() > NOTHING_COUNT;
     }
 
     @Override
-    public int calculateDiscountedAmount(VisitDate visitDate, Order order) {
-        int numberOfDessert = order.countNumberOfDessert();
+    public int calculateDiscountedAmount(VisitDate visitDate, Orders orders) {
+        int numberOfDessert = orders.countNumberOfDessert();
         return numberOfDessert * DISCOUNTED_AMOUNT_PER_DESSERT;
     }
 

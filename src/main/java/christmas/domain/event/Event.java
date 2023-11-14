@@ -1,7 +1,7 @@
 package christmas.domain.event;
 
 import christmas.domain.VisitDate;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 public interface Event {
 
@@ -9,9 +9,9 @@ public interface Event {
         return false;
     }
 
-    boolean isApplicable(VisitDate visitDate, Order order);
+    boolean isApplicable(VisitDate visitDate, Orders order);
 
-    int calculateDiscountedAmount(VisitDate visitDate, Order order);
+    int calculateDiscountedAmount(VisitDate visitDate, Orders order);
 
     String getName();
 }

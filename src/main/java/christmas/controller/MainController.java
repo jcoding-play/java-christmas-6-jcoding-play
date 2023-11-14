@@ -4,9 +4,9 @@ import christmas.converter.Converter;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.benefit.EventBenefits;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import christmas.dto.GiftMenuDto;
-import christmas.dto.OrderDto;
+import christmas.dto.OrdersDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
@@ -47,9 +47,9 @@ public class MainController {
         outputView.printStartMessage(MONTH_OF_THE_EVENT);
 
         VisitDate visitDate = repeatTemplate(this::selectVisitDate);
-        Order order = repeatTemplate(this::placeOrder);
+        Orders orders = repeatTemplate(this::placeOrder);
 
-        checkEventBenefits(order, visitDate);
+        checkEventBenefits(orders, visitDate);
     }
 
     private VisitDate selectVisitDate() {
@@ -57,27 +57,27 @@ public class MainController {
         return new VisitDate(MONTH_OF_THE_EVENT, date);
     }
 
-    private Order placeOrder() {
+    private Orders placeOrder() {
         String menuAndCounts = inputView.readMenuAndCount();
-        OrderDto orderDto = Converter.toOrderDto(menuAndCounts);
+        OrdersDto ordersDto = Converter.toOrdersDto(menuAndCounts);
 
-        return orderService.placeOrder(orderMapper, orderDto);
+        return orderService.placeOrder(orderMapper, ordersDto);
     }
 
-    private void checkEventBenefits(Order order, VisitDate visitDate) {
+    private void checkEventBenefits(Orders orders, VisitDate visitDate) {
         outputView.printPreviewBenefitsMessage(visitDate.getMonth(), visitDate.getDate());
 
-        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, order);
-        int totalOrderAmount = order.calculateTotalOrderAmount();
+        EventBenefits eventBenefits = benefitService.checkApplicableEventBenefits(visitDate, orders);
+        int totalOrderAmount = orders.calculateTotalOrderAmount();
         int totalBenefitAmount = eventBenefits.calculateTotalBenefitAmount();
 
-        showOrderInformation(order, totalOrderAmount);
+        showOrderInformation(orders, totalOrderAmount);
         showEventBenefits(eventBenefits, totalOrderAmount, totalBenefitAmount);
     }
 
-    private void showOrderInformation(Order order, int totalOrderAmount) {
-        OrderDto orderDto = orderMapper.toDto(order);
-        outputView.printMenu(orderDto.orderMenus());
+    private void showOrderInformation(Orders orders, int totalOrderAmount) {
+        OrdersDto ordersDto = orderMapper.toDto(orders);
+        outputView.printMenu(ordersDto.orders());
 
         outputView.printTotalOrderAmount(totalOrderAmount);
     }

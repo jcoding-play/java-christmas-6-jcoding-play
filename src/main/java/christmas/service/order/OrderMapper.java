@@ -1,10 +1,10 @@
 package christmas.service.order;
 
 import christmas.domain.menu.Menu;
+import christmas.domain.order.Orders;
 import christmas.domain.order.Order;
-import christmas.domain.order.OrderMenu;
+import christmas.dto.OrdersDto;
 import christmas.dto.OrderDto;
-import christmas.dto.OrderMenuDto;
 import christmas.domain.menu.MenuRepository;
 
 import java.util.List;
@@ -17,39 +17,39 @@ public class OrderMapper {
         this.menuRepository = menuRepository;
     }
 
-    public Order toEntity(OrderDto orderDto) {
-        List<OrderMenuDto> orderMenus = orderDto.orderMenus();
-        return mapOrder(orderMenus);
+    public Orders toEntity(OrdersDto ordersDto) {
+        List<OrderDto> orders = ordersDto.orders();
+        return mapOrder(orders);
     }
 
-    private Order mapOrder(List<OrderMenuDto> orderMenus) {
-        return orderMenus.stream()
-                .map(this::mapOrderMenu)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Order::new));
+    private Orders mapOrder(List<OrderDto> orders) {
+        return orders.stream()
+                .map(this::mapOrder)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Orders::new));
     }
 
-    private OrderMenu mapOrderMenu(OrderMenuDto orderMenu) {
-        Menu menu = menuRepository.findByName(orderMenu.name());
-        int count = orderMenu.count();
+    private Order mapOrder(OrderDto order) {
+        Menu menu = menuRepository.findByName(order.name());
+        int count = order.count();
 
-        return new OrderMenu(menu, count);
+        return new Order(menu, count);
     }
 
-    public OrderDto toDto(Order order) {
-        List<OrderMenu> orderMenus = order.getOrderMenus();
-        return mapOrderDto(orderMenus);
+    public OrdersDto toDto(Orders order) {
+        List<Order> orders = order.getOrders();
+        return mapOrderDto(orders);
     }
 
-    private OrderDto mapOrderDto(List<OrderMenu> orderMenus) {
-        return orderMenus.stream()
-                .map(this::mapOrderMenuDto)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), OrderDto::new));
+    private OrdersDto mapOrderDto(List<Order> orders) {
+        return orders.stream()
+                .map(this::mapOrderDto)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), OrdersDto::new));
     }
 
-    private OrderMenuDto mapOrderMenuDto(OrderMenu orderMenu) {
-        Menu menu = orderMenu.getMenu();
-        int count = orderMenu.getCount();
+    private OrderDto mapOrderDto(Order order) {
+        Menu menu = order.getMenu();
+        int count = order.getCount();
 
-        return new OrderMenuDto(menu.getName(), count);
+        return new OrderDto(menu.getName(), count);
     }
 }

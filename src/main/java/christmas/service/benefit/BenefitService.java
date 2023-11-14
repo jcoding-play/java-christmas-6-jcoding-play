@@ -4,7 +4,7 @@ import christmas.domain.benefit.EventBenefits;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.Event;
-import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 
 import java.util.Map;
 
@@ -15,8 +15,8 @@ public class BenefitService {
         this.events = events;
     }
 
-    public EventBenefits checkApplicableEventBenefits(VisitDate visitDate, Order order) {
-        Map<Event, Integer> benefitDetails = events.checkApplicableBenefitDetails(visitDate, order);
+    public EventBenefits checkApplicableEventBenefits(VisitDate visitDate, Orders orders) {
+        Map<Event, Integer> benefitDetails = events.checkApplicableBenefitDetails(visitDate, orders);
 
         return new EventBenefits(benefitDetails);
     }

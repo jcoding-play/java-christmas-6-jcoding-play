@@ -1,8 +1,8 @@
 package christmas.converter;
 
 import christmas.domain.event.Event;
+import christmas.dto.OrdersDto;
 import christmas.dto.OrderDto;
-import christmas.dto.OrderMenuDto;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,15 +12,18 @@ public class Converter {
     private static final String ORDER_MENUS_DELIMITER = ",";
     private static final String MENU_AND_COUNT_DELIMITER = "-";
 
-    public static OrderDto toOrderDto(String menuAndCounts) {
+    public static OrdersDto toOrdersDto(String menuAndCounts) {
         return Arrays.stream(menuAndCounts.split(ORDER_MENUS_DELIMITER))
-                .map(Converter::generateOrderMenuDto)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), OrderDto::new));
+                .map(Converter::generateOrderDto)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), OrdersDto::new));
     }
 
-    private static OrderMenuDto generateOrderMenuDto(String menuAndCount) {
+    private static OrderDto generateOrderDto(String menuAndCount) {
         String[] input = menuAndCount.split(MENU_AND_COUNT_DELIMITER);
-        return new OrderMenuDto(input[0], Integer.parseInt(input[1]));
+        String name = input[0];
+        int count = Integer.parseInt(input[1]);
+
+        return new OrderDto(name, count);
     }
 
     public static Map<String, Integer> toString(Map<Event, Integer> benefitDetails) {

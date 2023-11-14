@@ -1,42 +1,63 @@
 package christmas.domain.order;
 
-import christmas.utils.Constants;
+import christmas.domain.menu.Menu;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class Order {
-    private final List<OrderMenu> orderMenus;
+    private final Menu menu;
+    private final Count count;
 
-    public Order(List<OrderMenu> orderMenus) {
-        this.orderMenus = orderMenus;
+    public Order(Menu menu, int count) {
+        validateMenu(menu);
+        this.menu = menu;
+        this.count = new Count(count);
     }
 
-    public void validate(OrderValidator orderValidator) {
-        orderValidator.validate(orderMenus);
+    private void validateMenu(Menu menu) {
+        if (isNotOnTheMenu(menu)) {
+            throw new IllegalArgumentException(OrderValidator.INVALID_ORDER_EXCEPTION_MESSAGE);
+        }
     }
 
-    public int calculateTotalOrderAmount() {
-        return orderMenus.stream()
-                .map(OrderMenu::calculateOrderAmount)
-                .reduce(Constants.INITIAL_AMOUNT, Integer::sum);
+    private boolean isNotOnTheMenu(Menu menu) {
+        return menu == null;
     }
 
-    public int countNumberOfDessert() {
-        return orderMenus.stream()
-                .filter(OrderMenu::isDessert)
-                .map(OrderMenu::getCount)
-                .reduce(Constants.INITIAL_COUNT, Integer::sum);
+    public boolean isDrink() {
+        return menu.isDrink();
     }
 
-    public int countNumberOfMain() {
-        return orderMenus.stream()
-                .filter(OrderMenu::isMain)
-                .map(OrderMenu::getCount)
-                .reduce(Constants.INITIAL_COUNT, Integer::sum);
+    public boolean isDessert() {
+        return menu.isDessert();
     }
 
-    public List<OrderMenu> getOrderMenus() {
-        return Collections.unmodifiableList(orderMenus);
+    public boolean isMain() {
+        return menu.isMain();
+    }
+
+    public int calculateOrderAmount() {
+        return count.multiplyPrice(menu.getPrice());
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getCount() {
+        return count.getCount();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order orderMenu = (Order) o;
+        return Objects.equals(menu, orderMenu.menu) && Objects.equals(count, orderMenu.count);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(menu, count);
     }
 }
