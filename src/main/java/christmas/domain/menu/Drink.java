@@ -1,7 +1,5 @@
 package christmas.domain.menu;
 
-import christmas.domain.order.Count;
-
 public enum Drink implements Menu {
     ZERO_COLA("제로콜라", 3000),
     RED_WINE("레드와인", 60000),
@@ -26,12 +24,12 @@ public enum Drink implements Menu {
     }
 
     @Override
-    public int calculateOrderAmount(Count count) {
-        return count.multiplyPrice(price);
+    public String getName() {
+        return name;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public int getPrice() {
+        return price;
     }
 }

@@ -1,6 +1,7 @@
-package christmas.domain.event;
+package christmas.service.benefit;
 
 import christmas.domain.VisitDate;
+import christmas.domain.event.*;
 import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Main;
 import christmas.domain.order.Order;

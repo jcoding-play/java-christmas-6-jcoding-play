@@ -37,7 +37,7 @@ public class OrderMenu {
     }
 
     public int calculateOrderAmount() {
-        return menu.calculateOrderAmount(count);
+        return count.multiplyPrice(menu.getPrice());
     }
 
     public Menu getMenu() {

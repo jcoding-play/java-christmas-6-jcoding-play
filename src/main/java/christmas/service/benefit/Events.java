@@ -1,6 +1,7 @@
-package christmas.domain.event;
+package christmas.service.benefit;
 
 import christmas.domain.VisitDate;
+import christmas.domain.event.Event;
 import christmas.domain.order.Order;
 
 import java.util.Collections;

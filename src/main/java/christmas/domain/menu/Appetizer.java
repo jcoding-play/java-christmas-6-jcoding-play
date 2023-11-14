@@ -1,7 +1,5 @@
 package christmas.domain.menu;
 
-import christmas.domain.order.Count;
-
 public enum Appetizer implements Menu {
     MUSHROOM_SOUP("양송이수프", 6000),
     TAPAS("타파스", 5500),
@@ -21,12 +19,12 @@ public enum Appetizer implements Menu {
     }
 
     @Override
-    public int calculateOrderAmount(Count count) {
-        return count.multiplyPrice(price);
+    public String getName() {
+        return name;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public int getPrice() {
+        return price;
     }
 }

@@ -4,7 +4,6 @@ import christmas.domain.benefit.EventBenefits;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.event.Event;
-import christmas.domain.event.Events;
 import christmas.domain.menu.Drink;
 import christmas.domain.menu.Menu;
 import christmas.domain.order.Order;
