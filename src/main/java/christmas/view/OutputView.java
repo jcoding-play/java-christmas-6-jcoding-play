@@ -5,26 +5,28 @@ import christmas.utils.Constants;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
     private static final String NOTHING_MESSAGE = "없음";
-
+    private static final String PREFIX_SYMBOL_OF_PREFIX_MESSAGE = "<";
+    private static final String SUFFIX_SYMBOL_OF_PREFIX_MESSAGE = ">";
+    private static final String ORDER_MENU_MESSAGE = "주문 메뉴";
+    private static final String TOTAL_ORDER_AMOUNT_MESSAGE = "할인 전 총주문 금액";
+    private static final String GIFT_MENU_MESSAGE = "증정 메뉴";
+    private static final String BENEFIT_DETAILS_MESSAGE = "혜택 내역";
+    private static final String TOTAL_BENEFIT_AMOUNT_MESSAGE = "총혜택 금액";
+    private static final String ESTIMATED_PAYMENT_AMOUNT_MESSAGE = "할인 후 예상 결제 금액";
+    private static final String EVENT_BADGE_MESSAGE = "12월 이벤트 배지";
     private static final String START_MESSAGE_FORMAT = "안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다." + NEWLINE;
     private static final String PREVIEW_BENEFITS_MESSAGE_FORMAT = "%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEWLINE;
     private static final String MENU_MESSAGE_FORMAT = "%s %d개";
     private static final String AMOUNT_MESSAGE_FORMAT = "%,d원";
-    private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: -%s";
+    private static final String BENEFIT_DETAILS_MESSAGE_FORMAT = "%s: %s";
     private static final String ERROR_MESSAGE_FORMAT = "[ERROR] %s" + NEWLINE;
-
-    private static final String ORDER_MENU_MESSAGE_PREFIX = "<주문 메뉴>";
-    private static final String TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX = "<할인 전 총주문 금액>";
-    private static final String GIFT_MENU_MESSAGE_PREFIX = "<증정 메뉴>";
-    private static final String BENEFIT_DETAILS_MESSAGE_PREFIX = "<혜택 내역>";
-    private static final String TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX = "<총혜택 금액>";
-    private static final String ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX = "<할인 후 예상 결제 금액>";
-    private static final String EVENT_BADGE_MESSAGE_PREFIX = "<12월 이벤트 배지>";
+    private static final int NEGATIVE_NUMBER = -1;
 
     public void printStartMessage(int month) {
         System.out.printf(START_MESSAGE_FORMAT, month);
@@ -35,10 +37,7 @@ public class OutputView {
     }
 
     public void printMenu(List<OrderMenuDto> orderMenus) {
-        String prefixMessage = generatePrefixMessage(ORDER_MENU_MESSAGE_PREFIX);
-        String orderMenuMessage = generateMenuMessages(orderMenus);
-
-        System.out.println(join(prefixMessage, orderMenuMessage));
+        printTemplate(ORDER_MENU_MESSAGE, () -> generateMenuMessages(orderMenus));
     }
 
     private String generateMenuMessages(List<OrderMenuDto> orderMenus) {
@@ -52,10 +51,7 @@ public class OutputView {
     }
 
     public void printTotalOrderAmount(int totalOrderAmount) {
-        String prefixMessage = generatePrefixMessage(TOTAL_ORDER_AMOUNT_MESSAGE_PREFIX);
-        String totalOrderAmountMessage = generateAmountMessage(totalOrderAmount);
-
-        System.out.println(join(prefixMessage, totalOrderAmountMessage));
+        printTemplate(TOTAL_ORDER_AMOUNT_MESSAGE, () -> generateAmountMessage(totalOrderAmount));
     }
 
     private String generateAmountMessage(int amount) {
@@ -63,10 +59,7 @@ public class OutputView {
     }
 
     public void printGiftMenu(String giftMenu, int count) {
-        String prefixMessage = generatePrefixMessage(GIFT_MENU_MESSAGE_PREFIX);
-        String giftMenuMessage = generateGiftMenuMessage(giftMenu, count);
-
-        System.out.println(join(prefixMessage, giftMenuMessage));
+        printTemplate(GIFT_MENU_MESSAGE, () -> generateGiftMenuMessage(giftMenu, count));
     }
 
     private String generateGiftMenuMessage(String giftMenu, int count) {
@@ -77,10 +70,7 @@ public class OutputView {
     }
 
     public void printBenefitDetails(Map<String, Integer> benefitDetails) {
-        String prefixMessage = generatePrefixMessage(BENEFIT_DETAILS_MESSAGE_PREFIX);
-        String benefitDetailsMessage = generateBenefitDetailsMessages(benefitDetails);
-
-        System.out.println(join(prefixMessage, benefitDetailsMessage));
+        printTemplate(BENEFIT_DETAILS_MESSAGE, () -> generateBenefitDetailsMessages(benefitDetails));
     }
 
     private String generateBenefitDetailsMessages(Map<String, Integer> benefitDetails) {
@@ -94,36 +84,35 @@ public class OutputView {
     }
 
     private String generateBenefitDetailsMessage(String event, int discountedAmount) {
-        String discountedAmountMessage = generateAmountMessage(discountedAmount);
+        String discountedAmountMessage = generateAmountMessage(discountedAmount * NEGATIVE_NUMBER);
         return String.format(BENEFIT_DETAILS_MESSAGE_FORMAT, event, discountedAmountMessage);
     }
 
     public void printTotalBenefitAmount(int totalBenefitAmount) {
-        String prefixMessage = generatePrefixMessage(TOTAL_BENEFIT_AMOUNT_MESSAGE_PREFIX);
-        String totalBenefitAmountMessage = generateAmountMessage(totalBenefitAmount * -1);
-
-        System.out.println(join(prefixMessage, totalBenefitAmountMessage));
+        printTemplate(TOTAL_BENEFIT_AMOUNT_MESSAGE, () -> generateAmountMessage(totalBenefitAmount * NEGATIVE_NUMBER));
     }
 
     public void printEstimatedPaymentAmount(int estimatedPaymentAmount) {
-        String prefixMessage = generatePrefixMessage(ESTIMATED_PAYMENT_AMOUNT_MESSAGE_PREFIX);
-        String estimatedPaymentAmountMessage = generateAmountMessage(estimatedPaymentAmount);
-
-        System.out.println(join(prefixMessage, estimatedPaymentAmountMessage));
+        printTemplate(ESTIMATED_PAYMENT_AMOUNT_MESSAGE, () -> generateAmountMessage(estimatedPaymentAmount));
     }
 
     public void printEventBadge(String name) {
-        String prefixMessage = generatePrefixMessage(EVENT_BADGE_MESSAGE_PREFIX);
-
-        System.out.println(join(prefixMessage, name));
+        printTemplate(EVENT_BADGE_MESSAGE, () -> name);
     }
 
-    private String generatePrefixMessage(String prefix) {
-        return NEWLINE + prefix;
+    private void printTemplate(String message, Supplier<String> supplier) {
+        String prefixMessage = generatePrefixMessage(message);
+        String resultMessage = supplier.get();
+
+        System.out.println(join(prefixMessage, resultMessage));
     }
 
-    private String join(String prefix, String message) {
-        return String.join(NEWLINE, prefix, message);
+    private String generatePrefixMessage(String message) {
+        return NEWLINE + PREFIX_SYMBOL_OF_PREFIX_MESSAGE + message + SUFFIX_SYMBOL_OF_PREFIX_MESSAGE;
+    }
+
+    private String join(String prefixMessage, String resultMessage) {
+        return String.join(NEWLINE, prefixMessage, resultMessage);
     }
 
     public void printErrorMessage(String errorMessage) {
