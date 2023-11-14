@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.converter.Converter;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBenefits;
 import christmas.domain.benefit.EventBadge;
@@ -10,12 +11,9 @@ import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
 import christmas.dto.OrderDto;
-import christmas.dto.OrderMenuDto;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -63,7 +61,7 @@ public class MainController {
 
     private Order placeOrder() {
         String menuAndCounts = inputView.readMenuAndCount();
-        OrderDto orderDto = toDto(menuAndCounts);
+        OrderDto orderDto = Converter.toOrderDto(menuAndCounts);
 
         return orderService.placeOrder(orderMapper, orderDto);
     }
@@ -133,16 +131,5 @@ public class MainController {
                 .collect(Collectors.toMap(
                         Event::getName,
                         benefitDetails::get));
-    }
-
-    private OrderDto toDto(String menuAndCounts) {
-        List<OrderMenuDto> orderMenus = new ArrayList<>();
-
-        for (String menuAndCount : menuAndCounts.split(",")) {
-            String[] input = menuAndCount.split("-");
-            orderMenus.add(new OrderMenuDto(input[0], Integer.parseInt(input[1])));
-        }
-
-        return new OrderDto(orderMenus);
     }
 }
