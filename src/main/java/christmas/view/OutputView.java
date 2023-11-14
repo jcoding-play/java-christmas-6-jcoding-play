@@ -1,6 +1,9 @@
 package christmas.view;
 
+import christmas.dto.EventBenefitsDto;
+import christmas.dto.GiftMenuDto;
 import christmas.dto.OrderDto;
+import christmas.dto.OrdersDto;
 import christmas.utils.Constants;
 
 import java.util.List;
@@ -39,8 +42,8 @@ public class OutputView {
         System.out.printf(PREVIEW_BENEFITS_MESSAGE_FORMAT, month, date);
     }
 
-    public void printMenu(List<OrderDto> orders) {
-        printTemplate(ORDER_MENU_MESSAGE, () -> generateMenuMessages(orders));
+    public void printMenu(OrdersDto orders) {
+        printTemplate(ORDER_MENU_MESSAGE, () -> generateMenuMessages(orders.orders()));
     }
 
     private String generateMenuMessages(List<OrderDto> orders) {
@@ -61,8 +64,8 @@ public class OutputView {
         return String.format(AMOUNT_MESSAGE_FORMAT, amount);
     }
 
-    public void printGiftMenu(String giftMenu, int count) {
-        printTemplate(GIFT_MENU_MESSAGE, () -> generateGiftMenuMessage(giftMenu, count));
+    public void printGiftMenu(GiftMenuDto giftMenu) {
+        printTemplate(GIFT_MENU_MESSAGE, () -> generateGiftMenuMessage(giftMenu.name(), giftMenu.count()));
     }
 
     private String generateGiftMenuMessage(String giftMenu, int count) {
@@ -72,8 +75,8 @@ public class OutputView {
         return generateMenuMessage(giftMenu, count);
     }
 
-    public void printBenefitDetails(Map<String, Integer> benefitDetails) {
-        printTemplate(BENEFIT_DETAILS_MESSAGE, () -> generateBenefitDetailsMessages(benefitDetails));
+    public void printBenefitDetails(EventBenefitsDto eventBenefits) {
+        printTemplate(BENEFIT_DETAILS_MESSAGE, () -> generateBenefitDetailsMessages(eventBenefits.benefitDetails()));
     }
 
     private String generateBenefitDetailsMessages(Map<String, Integer> benefitDetails) {

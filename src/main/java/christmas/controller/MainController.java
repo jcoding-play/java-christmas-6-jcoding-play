@@ -6,16 +6,15 @@ import christmas.domain.benefit.EventBadge;
 import christmas.domain.benefit.EventBenefits;
 import christmas.domain.event.GiftMenu;
 import christmas.domain.order.Orders;
+import christmas.dto.EventBenefitsDto;
 import christmas.dto.GiftMenuDto;
 import christmas.dto.OrdersDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
-import christmas.utils.Constants;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class MainController {
@@ -83,7 +82,7 @@ public class MainController {
 
     private void showOrderInformation(Orders orders, int totalOrderAmount) {
         OrdersDto ordersDto = orderMapper.toDto(orders);
-        outputView.printMenu(ordersDto.orders());
+        outputView.printMenu(ordersDto);
 
         outputView.printTotalOrderAmount(totalOrderAmount);
     }
@@ -100,12 +99,12 @@ public class MainController {
         GiftMenu giftMenu = eventBenefits.findGiftMenu();
         GiftMenuDto giftMenuDto = GiftMenuDto.from(giftMenu);
 
-        outputView.printGiftMenu(giftMenuDto.name(), giftMenuDto.count());
+        outputView.printGiftMenu(giftMenuDto);
     }
 
     private void showBenefitDetails(EventBenefits eventBenefits) {
-        Map<String, Integer> benefitDetails = Converter.toString(eventBenefits.getBenefitDetails());
-        outputView.printBenefitDetails(benefitDetails);
+        EventBenefitsDto eventBenefitsDto = EventBenefitsDto.from(eventBenefits);
+        outputView.printBenefitDetails(eventBenefitsDto);
     }
 
     private void showTotalBenefitAmount(int totalBenefitAmount) {
