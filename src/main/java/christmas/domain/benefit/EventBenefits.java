@@ -25,20 +25,11 @@ public class EventBenefits {
     public int calculateEstimatedPaymentAmount(int totalOrderAmount, int totalBenefitAmount) {
         int result = subtractBetween(totalOrderAmount, totalBenefitAmount);
 
-        if (isGiftEventApplied()) {
-            return result + benefitDetails.get(new GiftEvent());
-        }
-        return result;
+        return result + benefitDetails.getOrDefault(new GiftEvent(), Constants.INITIAL_AMOUNT);
     }
 
     private int subtractBetween(int totalOrderPrice, int totalBenefitAmount) {
         return totalOrderPrice - totalBenefitAmount;
-    }
-
-    public boolean isGiftEventApplied() {
-        return benefitDetails.keySet()
-                .stream()
-                .anyMatch(Event::isGiftEvent);
     }
 
     public GiftMenuDto getGiftMenu() {
@@ -49,6 +40,12 @@ public class EventBenefits {
             return new GiftMenuDto(giftMenu.getName(), Constants.NUMBER_OF_GIFT_EVENTS_APPLIED);
         }
         return new GiftMenuDto(giftMenu.getName(), Constants.NUMBER_OF_GIFT_EVENTS_NOT_APPLIED);
+    }
+
+    private boolean isGiftEventApplied() {
+        return benefitDetails.keySet()
+                .stream()
+                .anyMatch(Event::isGiftEvent);
     }
 
     public Map<Event, Integer> getBenefitDetails() {
