@@ -1,11 +1,11 @@
 package christmas.service.order;
 
 import christmas.domain.menu.Menu;
-import christmas.domain.menu.MenuRepository;
 import christmas.domain.order.Order;
 import christmas.domain.order.OrderMenu;
 import christmas.dto.OrderDto;
 import christmas.dto.OrderMenuDto;
+import christmas.repository.MenuRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
