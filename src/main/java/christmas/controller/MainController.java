@@ -1,6 +1,5 @@
 package christmas.controller;
 
-import christmas.converter.Converter;
 import christmas.domain.VisitDate;
 import christmas.domain.benefit.EventBadge;
 import christmas.domain.benefit.EventBenefits;
@@ -12,6 +11,7 @@ import christmas.dto.OrdersDto;
 import christmas.service.benefit.BenefitService;
 import christmas.service.order.OrderMapper;
 import christmas.service.order.OrderService;
+import christmas.utils.Converter;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 

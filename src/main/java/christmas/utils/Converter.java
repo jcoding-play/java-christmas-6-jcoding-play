@@ -1,4 +1,4 @@
-package christmas.converter;
+package christmas.utils;
 
 import christmas.dto.OrderDto;
 import christmas.dto.OrdersDto;
