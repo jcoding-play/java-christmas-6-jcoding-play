@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Events {
-    private static final int MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE = 10000;
+    private static final int MINIMUM_APPLICABLE_TOTAL_ORDER_AMOUNT = 10000;
 
     private final List<Event> events;
 
@@ -18,20 +18,19 @@ public class Events {
         this.events = events;
     }
 
-    public Map<Event, Integer> checkApplicableEvents(VisitDate visitDate, Order order) {
-        List<Event> applicableEvents = findApplicableEvents(visitDate, order);
+    public Map<Event, Integer> checkApplicableBenefitDetails(VisitDate visitDate, Order order) {
+        if (order.calculateTotalOrderAmount() < MINIMUM_APPLICABLE_TOTAL_ORDER_AMOUNT) {
+            return Collections.emptyMap();
+        }
+        return checkEvents(visitDate, order);
+    }
 
+    private Map<Event, Integer> checkEvents(VisitDate visitDate, Order order) {
+        List<Event> applicableEvents = findApplicableEvents(visitDate, order);
         return calculateEachDiscountedAmountOf(applicableEvents, visitDate, order);
     }
 
-    public List<Event> findApplicableEvents(VisitDate visitDate, Order order) {
-        if (order.calculateTotalOrderAmount() < MINIMUM_APPLICABLE_TOTAL_ORDER_PRICE) {
-            return Collections.emptyList();
-        }
-        return findApplicableEvent(visitDate, order);
-    }
-
-    private List<Event> findApplicableEvent(VisitDate visitDate, Order order) {
+    protected List<Event> findApplicableEvents(VisitDate visitDate, Order order) {
         return events.stream()
                 .filter(event -> event.isApplicable(visitDate, order))
                 .toList();

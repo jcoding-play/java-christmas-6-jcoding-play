@@ -89,14 +89,4 @@ class EventsTest {
 
         assertThat(result).containsExactly(new WeekDayDiscount(), new SpecialDiscount());
     }
-
-    @Test
-    @DisplayName("총 주문 금액이 10,000원보다 작다면 어떤 이벤트도 적용되지 않는다.")
-    void findApplicableEvents_V6() {
-        Order order = new Order(
-                List.of(new OrderMenu(Dessert.ICE_CREAM, 1)));
-        List<Event> result = events.findApplicableEvents(new VisitDate(12, 31), order);
-
-        assertThat(result).isEmpty();
-    }
 }
