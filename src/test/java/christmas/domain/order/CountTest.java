@@ -22,4 +22,13 @@ class CountTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
+
+    @Test
+    @DisplayName("개수만큼 가격을 곱할 수 있다.")
+    void multiplyPrice() {
+        Count count = new Count(3);
+        int result = count.multiplyPrice(9000);
+
+        assertThat(result).isEqualTo(27000);
+    }
 }
